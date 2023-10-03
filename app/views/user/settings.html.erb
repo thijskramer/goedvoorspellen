@@ -1,0 +1,113 @@
+<% content_for :browsertitle do %>
+Instellingen
+<% end %>
+<% content_for :title do %>
+  Instellingen
+<% end %>
+<% if notice %>
+<div class="alert alert-info" id="notice"><span class="glyphicon glyphicon-ok check"></span><%= notice %></div>
+<% end %>
+<div class="settings">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <%= form_for(@user, url: 'instellingen/save', :html => {:class => 'form-horizontal'}) do |f| %>
+            <div class="content block">
+                <% if @user.errors.any? %>
+                    <div id="error_explanation">
+                        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this poule from being saved:</h2>
+                        <ul>
+                            <% @user.errors.full_messages.each do |msg| %>
+                                <li><%= msg %></li>
+                            <% end %>
+                        </ul>
+                    </div>
+                <% end %>
+                <div class="form-group">
+                      <%= f.label :name, "Naam", :class => 'col-sm-3 control-label' %>
+                      <div class="col-sm-9">
+                        <%= f.text_field :name, :class => 'form-control' %>
+                      </div>
+                </div>  
+                <div class="form-group">
+                  <%= f.label :public_name, "Publieke naam", :class => 'col-sm-3 control-label' %>
+                  <div class="col-sm-9">
+                    <%= f.text_field :public_name, :class => 'form-control' %>
+                    <span class="help-block">Vul hier een naam in die zichtbaar is voor niet-ingelogde gebruikers.</span>
+                  </div>
+                </div>  
+            </div>
+            <div class="content block">
+                <div class="form-group">
+                      <%= f.label :preferred_avatar, "Afbeelding", :class => 'col-sm-3 control-label' %>
+                      <div class="col-sm-9">
+                        <% @available_avatars.each do |avatar| %>
+                            <label class="radio avatar-option">
+                                <%= f.radio_button :preferred_avatar, avatar.id %>
+                                <img src="<%= avatar.url %>" />
+                                <%= I18n.t avatar.provider %>
+                            </label>
+                        <% end %>
+                      </div>
+                </div>  
+                <div class="form-group">
+                  <%= f.label :avatar_visibility, "Toon afbeelding:", :class => 'col-sm-3 control-label' %>
+                  <div class="col-sm-9">
+                    <%= f.select :avatar_visibility, avatar_visibility_options, {}, :class => 'form-control' %>
+                  </div>
+                </div>  
+            </div>
+            <div class="content block">
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <%= f.submit "Opslaan", :class => 'btn btn-primary' %>
+                    </div>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
+    <div class="row providers">
+        <div class="col-md-8 col-md-offset-2">
+            <h3>Andere diensten</h3>
+            <div class="loginbox content block">
+                <p>Koppel hier met andere providers zodat je met meerdere diensten kan inloggen onder hetzelfde account:</p>
+                <ul>
+                    <li class="facebook">
+                        <% unless @coupled_providers.include?('facebook') %><a href="/auth/facebook"><% end %>
+                            <span class="glyphicon glyphicon-ok <%= 'nok' unless @coupled_providers.include?('facebook') %>"></span>
+                            <img src="/images/facebook-logo.svg">
+                            <span>Facebook</span>
+                        <% unless @coupled_providers.include?('facebook') %></a><% end %>
+                    </li>
+                    <li class="googleplus">
+                        <% unless @coupled_providers.include?('gplus') %><a href="/auth/gplus"><% end %>
+                            <span class="glyphicon glyphicon-ok <%= 'nok' unless @coupled_providers.include?('gplus') %>"></span>
+                            <img src="/images/googleplus-logo.png">
+                            <span>Google+</span>
+                        <% unless @coupled_providers.include?('gplus') %></a><% end %>
+                    </li>
+                    <li class="twitter">
+                        <% unless @coupled_providers.include?('twitter') %><a href="/auth/twitter"><% end %>
+                            <span class="glyphicon glyphicon-ok <%= 'nok' unless @coupled_providers.include?('twitter') %>"></span>
+                            <img src="/images/twitter-logo.png">
+                            <span>Twitter</span>
+                        <% unless @coupled_providers.include?('twitter') %></a><% end %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <% unless @is_poule_admin %>
+    <div class="row providers">
+        <div class="col-md-8 col-md-offset-2">
+            <h3>Account verwijderen</h3>
+            <div class="loginbox content block">
+                <p>Klik hieronder op de knop indien je je account wilt verwijderen.</p>
+                <p>
+                    <%= link_to 'Account verwijderen', remove_account_path,  method: :patch, data: { confirm: 'Je staat op het punt je account te verwijderen. Hiermee verwijder je ook je voorspellingen en eventuele deelnames aan poules. Weet je echt zeker dat je je account wilt verwijderen? Je kunt dit niet ongedaan maken!' }, :class => 'btn btn-danger' %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <% end %>
+</div>

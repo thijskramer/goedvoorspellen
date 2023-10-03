@@ -1,0 +1,22 @@
+<h1>Listing matches</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Naam</th>
+      <th>Nog niet voorspeld:</th>
+      <th>Valid</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+        <tr>
+            <td><%= user.name %></td>
+            <td><%= user.unpredicted_known_matches %></td>
+            <td><%= user.deleted ? "Deleted" : "Valid" %></td>
+        </tr>
+
+    <% end %>
+
+  </tbody>
+</table>

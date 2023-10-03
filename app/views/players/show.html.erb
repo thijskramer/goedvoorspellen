@@ -1,0 +1,155 @@
+<% content_for :browsertitle do %>
+<%= @player.fullname %> (<%= @team.name %>)
+<% end %>
+<% content_for :title do %>
+    <a href="<%= teams_path %>">Landen</a>
+    <span class="separator">&rsaquo;</span>
+    <a href="<%= team_path(@team) %>"><%= @team.name %></a>
+    <span class="separator">&rsaquo;</span>
+    <%= @player.fullname %>
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="<%= @player.name %>" />
+<meta property="og:description" content="<%= @player.name %> maakt deel uit van de selectie van <%= @team.name %> op het WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="detailspage playerdetails">
+	<div class="row">
+	  <div class="col-md-8">
+	    <h2 class="title"><%= flag(@team.country.isoAlpha2Code, 48) %> <%= @player.fullname %></h2>
+        <div class="block whitebg">
+    	    <table class="playerinfo keyvalue">
+    	    	<tr>
+    	    		<td class="key">Geboortedatum:</td>
+    	    		<td><%= @player.dateOfBirth.strftime('%d-%m-%Y') %> (<%= @player.age %> jaar)</td>
+    	    	</tr>
+    	    	<tr>
+    	    		<td class="key">Positie:</td>
+    	    		<td><%= @player.position %></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<td class="key">Club:</td>
+    	    		<td><%= flag(@player.club.country.isoAlpha2Code) %><%= @player.club.name %></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<td class="key">Aantal interlands:</td>
+    	    		<td><%= @player.computed_caps %></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<td class="key">Aantal doelpunten:</td>
+    	    		<td><%= @player.computed_goals %></td>
+    	    	</tr>
+    	    </table>
+        </div>
+	    <h3>Op het WK</h3>
+        <div class="block whitebg">
+    	    <table class="playerinfo keyvalue">
+    	    	<tr>
+    	    		<td class="key">Aantal wedstrijden gespeeld:</td>
+    	    		<td><%= (@player.lineups.length + @player.substitutions_in.length) %> <% if (@player.lineups.length + @player.substitutions_in.length) > 0 %>(<%= @player.lineups.length %> x in de basis, <%= @player.substitutions_in.length %> keer ingevallen)<% end %></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<td class="key">Doelpunten:</td>
+    	    		<td><%= @player.wkgoals.length %></td>
+    	    	</tr>
+    	    	<tr>
+    	    		<td class="key">Kaarten:</td>
+    	    		<td><%= @player.bookings.length %> <% if @player.bookings.length > 0 %>(<%= @player.yellowcards.length %> geel, <%= @player.redcards.length %> rood)<% end %></td>
+    	    	</tr>
+    	    </table>
+        </div>
+	  </div>
+	  <div class="col-md-4">
+          <div class="block playerlist <%= @team.country.isoAlpha2Code.downcase %>">
+            <div class="position">
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="playerstable">
+                     <% @team.keepers.each do |p| %>
+                    <tr class="<%= "active" if @player.id == p.id %>">
+                      <td class="number">
+                        <span class="number"><%= p.number %></span>
+                      </td>
+                      <td class="name">
+                        <div class="player">
+                          <a href="<%= team_player_path(@team, p) %>" class="keeper">
+                            <span class="name"><%= p.fullname.strip %></span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="position">
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="playerstable">
+                     <% @team.defenders.each do |p| %>
+                    <tr class="<%= "active" if @player.id == p.id %>">
+                      <td class="number">
+                        <span class="number"><%= p.number %></span>
+                      </td>
+                      <td class="name">
+                        <div class="player">
+                          <a href="<%= team_player_path(@team, p) %>">
+                            <span class="name"><%= p.fullname.strip %></span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="position">
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="playerstable">
+                     <% @team.midfielders.each do |p| %>
+                    <tr class="<%= "active" if @player.id == p.id %>">
+                      <td class="number">
+                        <span class="number"><%= p.number %></span>
+                      </td>
+                      <td class="name">
+                        <div class="player">
+                          <a href="<%= team_player_path(@team, p) %>">
+                            <span class="name"><%= p.fullname.strip %></span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="position">
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="playerstable">
+                     <% @team.attackers.each do |p| %>
+                    <tr class="<%= "active" if @player.id == p.id %>">
+                      <td class="number">
+                        <span class="number"><%= p.number %></span>
+                      </td>
+                      <td class="name">
+                        <div class="player">
+                          <a href="<%= team_player_path(@team, p) %>">
+                            <span class="name"><%= p.fullname.strip %></span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+	  </div>
+	</div>
+</div>

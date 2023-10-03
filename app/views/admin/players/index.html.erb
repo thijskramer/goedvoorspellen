@@ -1,0 +1,49 @@
+<h1>Listing players</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Country</th>
+      <th>Position</th>
+      <th>Club</th>
+      <th>Number</th>
+      <th>Iscaptain</th>
+      <th>Isvicecaptain</th>
+      <th>Caps</th>
+      <th>Goals</th>
+      <th>Dateofbirth</th>
+      <th>Insquad</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @players.each do |player| %>
+      <tr>
+        <td><%= player.firstName %></td>
+        <td><%= player.lastName %></td>
+        <td><%= player.country.name %></td>
+        <td><%= player.position %></td>
+        <td><%= player.club == nil ? "" : player.club.name %></td>
+        <td><%= player.number %></td>
+        <td><%= player.isCaptain %></td>
+        <td><%= player.isViceCaptain %></td>
+        <td><%= player.caps %></td>
+        <td><%= player.goals %></td>
+        <td><%= player.dateOfBirth %></td>
+        <td><%= player.inSquad %></td>
+        <td><%= link_to 'Show', admin_player_path(player) %></td>
+        <td><%= link_to 'Edit', edit_admin_player_path(player) %></td>
+        <td><%= link_to 'Destroy', admin_player_path(player), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Player', new_admin_player_path %>

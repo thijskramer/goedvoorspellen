@@ -1,0 +1,26 @@
+@import 'variables';
+.topscorers {
+    margin-top: 10px;
+    section {
+        background: #fff;
+    }
+	table {
+		width: 100%;
+		tr {
+			td {
+				&.goals {
+					font-family: $headfont;
+					font-weight: 700;
+                    font-size: 18px;
+                    width: 20px;
+				}
+                &.rank {
+                    padding-left: 8px;
+                }
+				border-bottom: 1px solid $bordercolor;
+				padding-top: 5px;
+				padding-bottom: 5px;
+			}
+		}
+	}
+}

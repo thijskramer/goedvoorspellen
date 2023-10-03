@@ -1,0 +1,37 @@
+$green: #00c90d;
+$yellow: #FFD400;
+$titlebg-transparent: rgba(30,30,30,0.85);
+$titlebg-solid: #2c2c2c;
+$titlecolor: #fff;
+$bodycolor: #333333;
+// $linkcolor: #067CE2;
+$linkcolor: $bodycolor;
+$linkcolor-hover: #1D8D18;
+// $linkcolor-hover: #30AA00;
+$link-on-dark-hover: $green;
+$bordercolor: #e0e0e0;
+$headfont: "Montserrat", Arial, sans-serif;
+
+////////
+
+@mixin title($fontsize, $transparent: false) {
+	text-transform: uppercase;
+    font-weight: 700;
+    font-family: "Montserrat";
+    font-size: $fontsize;
+    color: $titlecolor;
+    @if $transparent == true {
+    	background: $titlebg-transparent;
+    }
+   	@if $transparent == false {
+   		background: $titlebg-solid;
+   	}
+}
+@mixin title-nobg($fontsize) {
+	text-transform: uppercase;
+    font-weight: 700;
+    font-family: "Montserrat";
+    font-size: $fontsize;
+    color: $bodycolor;
+   	background: transparent;
+}

@@ -1,0 +1,82 @@
+<%= form_for([:admin, @player], :html => {:class => "form-horizontal"}) do |f| %>
+<%= f.hidden_field :country_id %>
+<%= f.hidden_field :inSquad %>
+<div class="modal-body">
+  <% if @player.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
+
+    <ul>
+      <% @player.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :firstName, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.text_field :firstName, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :lastName, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.text_field :lastName, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :dateOfBirth, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.date_select :dateOfBirth, {:order => [:day, :month, :year], :start_year => 1960, :end_year => 2000, :with_css_classes => true}, {:class => "form-control"} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :position, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.select :position, ["Keeper", "Verdediger", "Middenvelder", "Aanvaller"], {}, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :club_id, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%# f.grouped_collection_select :club_id, @countries, :clubs, :dutchName, :id, :name, {}, :class=> 'form-control' %>
+      <%= f.collection_select :club_id, Club.order(:country_id), :id, :ddlName, {}, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :number, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-3">
+      <%= f.text_field :number, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-8 col-sm-offset-3">
+      <label class="checkbox-inline">
+        <%= f.check_box :isCaptain %> Captain
+      </label>
+      <label class="checkbox-inline">
+        <%= f.check_box :isViceCaptain %> Vice-Captain
+      </label>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :caps, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.text_field :caps, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :goals, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+      <%= f.text_field :goals, :class => 'form-control' %>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <%= f.submit :class => 'btn btn-primary' %>
+</div>
+<% end %>

@@ -1,0 +1,688 @@
+@import 'icons';
+@import 'variables';
+.match-cards {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .matchtype {
+    font-size: 32px;
+    text-align: left;
+    font-family: $headfont;
+    // color: $bodycolor;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 40px;
+    margin-bottom: 10px;
+    margin-top: 30px;
+    @media(max-width: 767px) {
+        font-size: 18px;
+    }
+  }
+}
+.match-card {
+  position: relative;
+  margin-bottom: 10px;
+  display: block;
+  padding-top: 16px;
+  > header {
+    position: absolute;
+    top: 0;
+    @media(max-width: 767px) {
+        top: -3px;
+    }
+    span {
+        
+    }
+  }
+  > section {
+    background: #fff;
+    height: 63px;
+    padding-top: 16px;
+    &.has-penalties {
+        height: 82px;
+
+    }
+    @media(max-width: 767px) {
+        height: auto;
+        padding-top: 0px;
+        padding-bottom: 9px;
+        &.has-penalties {
+            height: 73px;
+        }
+    }
+
+  }
+  .matchdatetime {
+    // font-size: 28px;
+    font-family: "Montserrat";
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(0,0,0,0.85);    
+    padding-left: 10px;
+    padding-right: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    @media(max-width: 767px) {
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 5px;
+    }
+  }
+  .score {
+    background: #111;
+    font-weight: 700;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 2px;
+    font-size: 28px;
+    text-align: center;
+    width: 31px;
+    border-radius: 3px;
+    margin-top: -5px;
+    @media(max-width: 767px) {
+        font-size: 18px;
+        width: 20px;
+        border-radius: 2px;
+        margin-top: -2px;
+        padding-top: 1px;
+    }
+  }
+  .opponents {
+    text-transform: uppercase;
+    font-family: "Montserrat";
+    &:after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+    .home, .away {
+      position: relative;
+      width: 50%;
+      float: left;
+      .team {
+        font-size: 22px;
+        color: #333;
+        @media(max-width: 767px) {
+            font-size: 14px;
+            padding-top: 2px;
+            .wns {
+                font-size: 10px;
+            }
+        }
+        &.ba, &.us {
+            @media(max-width: 767px) {
+                margin-top: -9px;
+            }
+        }
+        .flag {
+          position: absolute;
+          top: 3px;
+          margin: 0;
+          @media(max-width: 767px) {
+            width: 18px;
+        }
+//          margin-top: -4px;
+//          margin-right: 0;
+        }
+        padding-left: 40px;
+        .wns {
+            font-size: 14px;
+            margin-top: -5px;
+            line-height: 18px;
+            position: absolute;
+            @media(max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+      }
+    }
+    .home {
+      .team {
+        text-align: right;
+        padding-right: 66px;
+        padding-left: 0;
+        @media(max-width: 767px) {
+            padding-right: 48px;
+        }
+        .flag {
+            right: 39px;
+            @media(max-width: 767px) {
+                right: 27px;
+            }
+        }
+        .wns {
+            right: 66px;
+            @media(max-width: 767px) {
+                right: 48px;
+            }
+        }
+      }
+      .score {
+        right: 2px;
+        left: auto;
+      }
+    }
+    .away {
+      .team {
+        padding-left: 66px;
+        @media(max-width: 767px) {
+            padding-left: 48px;
+        }
+        .flag {
+            left: 39px;
+            @media(max-width: 767px) {
+                left: 27px;
+            }
+        }
+        .wns {
+            left: 66px;
+            @media(max-width: 767px) {
+                left: 48px;
+            }
+        }
+      }
+    }
+  }
+  .match-number {
+    position: absolute;
+    right: 7px;
+    bottom: -3px;
+    font-family: "Montserrat";
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 15px;
+    // background: #FFD400;
+    width: 28px;
+    height: 28px;
+    color: #aaa;
+    text-align: right;
+    padding-top: 3px;
+    @media(max-width: 767px) {
+        display: none;
+    }
+  }
+  .stage {
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 54px;
+    font-family: "Montserrat";
+    text-align: center;
+    font-weight: 700;
+    @media(max-width: 767px) {
+        width: auto;
+        text-align: center;
+        padding-left: 2px;
+        display: block;
+        position: relative;
+        top: auto;
+        left: auto;
+    }
+    .lbl {
+        font-size: 12px;
+        color: #aaa;
+        text-transform: uppercase;
+    }
+    .groupname {
+        font-size: 36px;
+        line-height: 24px;
+        color: #333;
+        display: block;
+        text-transform: uppercase;
+        @media(max-width: 767px) {
+            display: inline;
+            font-size: 12px;
+            line-height: auto;
+            
+        }
+    }
+  }
+  .venue {
+    text-align: center;
+    padding-top: 6px;
+    position: absolute;
+    right: 3px;
+    top: 9px;
+    @media(max-width: 767px) {
+        display: none;
+    }
+    .stadium, .city, .stadiumlabel {
+      display: inline-block;
+      font-size: 12px;
+      // color: #555;
+    }
+    .city {
+      font-style: italic;
+    }
+    .stadium {
+      font-weight: 700;
+    }
+  }
+  .penalties {
+    position: relative;
+    width: 100%;
+    .lbl {
+        text-align: center;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-family: $headfont;
+    }
+    .scores {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        .score {
+            left: 6px;
+            width: 22px;
+            font-size: 18px;
+            top: 11px;
+            &.home {
+                right: 6px;
+                left: auto;
+            }
+            @media(max-width: 767px) {
+                left: 4px;
+                width: 15px;
+                font-size: 12px;
+                top: 6px;
+                &.home {
+                    right: 4px;
+                }
+            }
+        }
+    }
+  }
+  &:hover {
+    border-bottom: 5px solid $green;
+    margin-bottom: 5px;
+  }
+}
+
+.matchdetails {
+   // background: rgba(0, 0, 0, 0.65);
+    // text-shadow: 1px 1px 0 #000;
+    
+    
+  .matchheader {
+    text-align: center;
+    font-size: 16px;
+    background: rgba(0,0,0,0.65);
+    color: #fff;
+    padding: 10px 0;
+    line-height: 30px;
+    .date {
+        font-family: $headfont;
+        text-transform: uppercase;
+        // text-align: left;
+        font-weight: 700;
+    }
+    a {
+        color: #fff;
+        &:hover {
+            color: $green;
+        }
+    }
+  }
+  .matchdata {
+    background: #fff;
+    padding-top: 20px;
+    table {
+      width: 100%;
+      margin-top: 20px;
+      @media(max-width: 767px) {
+            margin-top: -4px;
+        }
+      a {
+            color: #000;
+            &:hover {
+                color: $green;
+            }
+        }
+      .home, .away {
+        width: 45%;
+      }
+      thead {
+        .home {
+          text-align: right;
+        }
+        tr th {
+        // > tr > th {
+          font-family: "Montserrat";
+          font-weight: 700;
+          text-transform: uppercase;
+          padding-bottom: 30px;
+          @media(max-width: 767px) {
+            padding-bottom: 10px;
+          }
+          > table {
+            margin: 0;
+            width: 100%;
+          }
+        }
+        th {
+            &.home, &.away {
+                font-size: 24px;
+                width: auto;
+                .flag {
+                  margin-top: -5px;
+                }
+                .wns {
+                    font-size: 16px;
+                }
+                @media(max-width: 767px) {
+                    font-size: 14px;
+                    width: 50%;
+                    .wns {
+                        font-size: 11px;
+                    }
+                }
+              }
+              &.away {
+                .flag {
+                  margin-left: 4px;
+                }
+              }
+              &.result {
+                text-align: center;
+                @media(max-width: 992px) {
+                    width: 100px;
+                }
+                @media(max-width: 767px) {
+                    width: auto;
+                    white-space: nowrap;
+
+                }
+                .score {
+                  background: #111;
+                  font-weight: 700;
+                  color: #fff;
+                  font-size: 28px;
+                  text-align: center;
+                  width: 31px;
+                  border-radius: 3px;
+                  margin-top: -5px;
+                  display: inline-block;
+                  @media(max-width: 767px) {
+                    font-size: 18px;
+                    width: 21px;
+                    line-height: 26px;
+                  }
+                }
+              }
+        }
+      }
+      tr {
+        td.label {
+          vertical-align: middle;
+          text-align: center;
+          font-weight: bold;
+          color: #000;
+          font-size: 100%;
+          border-radius: 0;
+          line-height: auto;
+          display: table-cell;
+          padding-top: 14px;
+          padding-bottom: 15px;
+        }
+        td {
+          padding-bottom: 30px;
+          border: 1px solid $bordercolor;
+
+          ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li {
+              position: relative;
+            }
+          }
+        }
+        td.home {
+          text-align: right;
+          vertical-align: top;
+          padding: 10px 10px 10px 0;
+          @media(max-width: 767px) {
+                padding: 10px 5px 10px 0;
+            }
+        }
+        td.away {
+            padding: 10px 0 10px 10px;
+            @media(max-width: 767px) {
+                padding: 10px 0 10px 5px;
+            }
+        }
+      }
+      tr.lineup {
+        strong.number {
+            display: inline-block;
+            width: 22px;
+            text-align: center;
+        }
+        span.substitution {
+          font-size: 10px;
+          position: relative;
+          vertical-align: middle;
+          color: #111;
+          font-weight: 700;
+          padding-right: 9px;
+          margin-right: 10px;
+          &.out {
+            &:after {
+                border-top: 5px solid #f00;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                content: "";
+                top: 5px;
+                right: 0;
+                position: absolute;
+            }
+          }
+          &.in {
+            &:after {
+                border-bottom: 5px solid $green;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                content: "";
+                top: 5px;
+                right: 0;
+                position: absolute;
+            }
+          }
+        }
+        
+        td.away {
+          vertical-align: top;
+          span.substitution {
+            vertical-align: middle;
+            padding-left: 12px;
+            padding-right: 0;
+            margin-left: 10px;
+            margin-right: 0;
+            &.out {
+              &:after {
+                left: 0;
+                right: auto;
+              }
+            }
+            &.in {
+              &:after {
+                right: auto;
+                left: 0px;
+              }
+            }
+          }
+        }
+      }
+      tr.scores, tr.penalties {
+        span.goal {
+          background-image: url(../images/football.png);
+          background-repeat: no-repeat;
+          font-size: 10px;
+          display: inline-block;
+          font-weight: 700;
+          line-height: 16px;
+          vertical-align: middle;
+          color: #111;
+          position: relative;
+          &.misses {
+            &:after {
+                content: "\00d7";
+                color: #f00;
+                left: 3px;
+                top: 0;
+                position: absolute;
+                font-size: 27px;
+            }
+          }
+        }
+        td.home {
+          vertical-align: top;
+          span.goal {
+            background-position: right 0;
+            padding-right: 19px;
+          }
+        }
+        td.away {
+          vertical-align: top;
+          span.goal {
+            background-position: left 0;
+            padding-left: 19px;
+            &.misses:after {
+                right: 4px;
+                left: auto;
+            }
+          }
+        }
+      }
+      tr.bookings {
+        span.booking {
+          color: #111;
+          &.yellow {
+            background-image: url(../images/yellow.png);
+          }
+          &.red {
+            background-image: url(../images/red.png);
+            color: #111;
+          }
+          &.yellowred {
+            background-image: url(../images/yellowred.png);
+          }
+          background-repeat: no-repeat;
+          font-size: 10px;
+          display: inline-block;
+          font-weight: 700;
+          line-height: 16px;
+          vertical-align: middle;
+        }
+        td.home {
+          vertical-align: top;
+          span.booking {
+            background-position: right 0;
+            padding-right: 19px;
+          }
+        }
+        td.away {
+          vertical-align: top;
+          span.booking {
+            background-position: left 0;
+            padding-left: 19px;
+          }
+        }
+      }
+    }
+  }
+  .predictions {
+    margin-top: 10px;
+    table {
+        width: 100%;
+        background: #fff;
+        tr:first-child td {
+            padding-top: 10px;
+        }
+        tr:last-child td {
+            padding-bottom: 10px;
+        }
+        td {
+            vertical-align: middle;
+            .progress {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                .progress-bar > span {
+                    color: #333;
+                }
+            }
+            &.bar {
+                padding-right: 20px;
+                padding-left: 5px;
+            }
+        }
+        td.label {
+            width: 10%;
+            vertical-align: middle;
+            text-align: right;
+            font-weight: bold;
+            color: #000;
+            font-size: 100%;
+            border-radius: 0;
+            line-height: auto;
+            display: table-cell;
+        }
+    }
+  }
+}
+
+.modal.wedstrijden {
+    .modal-content {
+        border-radius: 0;
+        background: transparent;
+    }
+    .modal-header {
+        background: #fff;
+        border-bottom: 0;
+        h4 {
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #000;
+            font-family: $headfont;
+        }
+        .close {
+            color: #fff;
+            opacity: 0.9;
+            text-shadow: none;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    .modal-body {
+        background: #fff;
+        padding-top: 0;
+        .nav-tabs {
+            margin-left: -20px;
+            margin-right: -20px;
+            padding-left: 20px;
+            > li > a {
+                font-family: $headfont;
+                text-transform: uppercase;
+                color: #000;
+                border-radius: 0;
+            }
+        }
+        .tab-pane {
+            padding-top: 20px;
+        }
+    }
+    .modal-footer {
+        background: #fff;
+        margin-top: 0;
+    }
+
+}

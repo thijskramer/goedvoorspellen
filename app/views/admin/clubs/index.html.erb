@@ -1,0 +1,34 @@
+<h1>Listing clubs</h1>
+<%= link_to 'New Club', new_admin_club_path, :class => 'btn btn-success' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% 
+    currCountry = ""
+    @clubs.each do |club|
+      if club.country.dutchName != currCountry 
+        currCountry = club.country.dutchName
+      %>
+      <tr>
+        <th colspan="4">
+          <%= flag(club.country.isoAlpha2Code) %><%= club.country.dutchName %>
+        </th>
+      </tr>
+      <% end %>
+      <tr>
+        <td><%= link_to club.name, admin_club_path(club) %></td>
+        <td><%= link_to 'Edit', edit_admin_club_path(club) %></td>
+        <td><%= link_to 'Destroy', admin_club_path(club), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

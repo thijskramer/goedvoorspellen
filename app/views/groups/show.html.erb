@@ -1,0 +1,68 @@
+<% content_for :browsertitle do %>
+Groep <%= @group.name %>
+<% end %>
+<% content_for :title do %>
+    <a href="<%= groups_path %>">Groepen</a>
+    <span class="separator">&rsaquo;</span>
+    Groep <%= @group.name %>
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="Stand in poule <%= @group.name %> op het WK 2014" />
+<meta property="og:description" content="Alle informatie over de stand, wedstrijden, deelnemers en topscorers in groep <%= @group.name %> op het WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="row">
+    <div class="col-md-8">
+        <div class="detailspage">
+            <h2>Stand</h2>
+            <%= render 'shared/group', :group => @group, :title => false %>
+
+            <h2>Wedstrijden</h2>
+            <% @group.matches.each do |m| %>
+              <%= render 'shared/match', :match => m, :show_group => false, :show_stage => false %>
+            <% end %>
+        </div>
+    </div>
+    <div class="col-md-4">
+      <aside>
+        <% unless @lastmatch == nil %>
+        <div class="block nextgame">
+          <h3>Laatste wedstrijd</h3>
+          <%= render 'shared/lastmatch', :match => @lastmatch %>
+        </div>
+        <% end %>
+        <% unless @nextmatch == nil %>
+        <div class="block nextgame">
+          <h3>Volgende wedstrijd</h3>
+          <%= render 'shared/nextmatch', :match => @nextmatch %>
+          <h3>Begint over</h3>
+          <%= render 'shared/matchcountdown', :match => @nextmatch %>
+        </div>
+        <% end %>
+      <% if @players_that_scored.length > 0 %>
+        <div class="block topscorers">
+          <h3>Topscorers in groep <%= @group.name %></h3>
+          <section>
+              <table>
+                <% prevscore = 0 %>
+                <% @players_that_scored.each_with_index do |p, rank| %>
+                
+                  <tr>
+                    <td class="rank">
+                      <% if prevscore != p.groupgoals(@match_ids).length 
+                          prevscore = p.groupgoals(@match_ids).length 
+                        %>
+                        <%= rank+1 %>.
+                      <% end %>
+                    </td>
+                    <td class="name"><%= flag(p.country.isoAlpha2Code) %><a href="<%= team_player_path(p.team, p) %>"><%= p.name.strip %></td>
+                    <td class="goals"><%= p.groupgoals(@match_ids).length %></td>
+                  </tr>
+                <% end %>
+              </table>
+            </section>
+        </div>
+      <% end %>
+    </aside>
+  </div>
+</div>

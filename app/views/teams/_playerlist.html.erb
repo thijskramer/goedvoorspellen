@@ -1,0 +1,92 @@
+<div class="block playerlist <%= @team.country.isoAlpha2Code.downcase %>">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="playerstable">
+                <thead>
+                    <tr>
+                        <th>Pos.</th>
+                        <th class="name">Naam</th>
+                        <th class="dob">Geboortedatum</th>
+                        <th class="caps"><span class="visible-md visible-lg">Interlands</span><span class="visible-sm">Caps</span></th>
+                        <th class="goals"><span class="visible-md visible-lg">Doelpunten</span><span class="visible-sm">Goals</span></th>
+                        <th class="club">Club</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% specialrow = true %>
+                    <% @team.keepers.each do |p| %>
+                        <tr class="<%= 'marker' if specialrow %>">
+                            <td class="pos"><abbr title="Keeper">kp</abbr></td>
+                            <td class="name">
+                                <div class="player">
+                                    <a href="<%= team_player_path(@team, p) %>" class="keeper">
+                                        <span class="shirt"><span class="number"><%= p.number %></span></span><span class="name"><%= p.fullname.strip %></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="dob"><span class="visible-md visible-lg"><%= p.dateOfBirth.strftime('%-d') %> <%= (I18n.t p.dateOfBirth.strftime('%B')).downcase %> <%= p.dateOfBirth.strftime('%Y') %> (<%= p.age %> jaar)</span><span class="visible-sm"><%= p.dateOfBirth.strftime('%d-%m-%Y') %> (<%= p.age %> jaar)</span></td>
+                            <td class="caps"><%= p.computed_caps %></td>
+                            <td class="goals"><%= p.computed_goals %></td>
+                            <td class="club"><span class="club"><%= flag(p.club.country.isoAlpha2Code, 32) %><%= p.club.name %></span></td>
+                        </tr>
+                        <% specialrow = false %>
+                    <% end %>
+                    <% specialrow = true %>
+                    <% @team.defenders.each do |p| %>
+                        <tr class="<%= 'marker' if specialrow %>">
+                            <td class="pos"><abbr title="Verdediger">vd</abbr></td>
+                            <td class="name">
+                                <div class="player">
+                                    <a href="<%= team_player_path(@team, p) %>">
+                                        <span class="shirt"><span class="number"><%= p.number %></span></span><span class="name"><%= p.fullname.strip %></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="dob"><span class="visible-md visible-lg"><%= p.dateOfBirth.strftime('%-d') %> <%= (I18n.t p.dateOfBirth.strftime('%B')).downcase %> <%= p.dateOfBirth.strftime('%Y') %> (<%= p.age %> jaar)</span><span class="visible-sm"><%= p.dateOfBirth.strftime('%d-%m-%Y') %> (<%= p.age %> jaar)</span></td>
+                            <td class="caps"><%= p.computed_caps %></td>
+                            <td class="goals"><%= p.computed_goals %></td>
+                            <td class="club"><span class="club"><%= flag(p.club.country.isoAlpha2Code, 32) %><%= p.club.name %></span></td>
+                        </tr>
+                        <% specialrow = false %>
+                    <% end %>
+                    <% specialrow = true %>
+                    <% @team.midfielders.each do |p| %>
+                        <tr class="<%= 'marker' if specialrow %>">
+                            <td class="pos"><abbr title="Middenvelder">mv</abbr></td>
+                            <td class="name">
+                                <div class="player">
+                                    <a href="<%= team_player_path(@team, p) %>">
+                                        <span class="shirt"><span class="number"><%= p.number %></span></span><span class="name"><%= p.fullname.strip %></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="dob"><span class="visible-md visible-lg"><%= p.dateOfBirth.strftime('%-d') %> <%= (I18n.t p.dateOfBirth.strftime('%B')).downcase %> <%= p.dateOfBirth.strftime('%Y') %> (<%= p.age %> jaar)</span><span class="visible-sm"><%= p.dateOfBirth.strftime('%d-%m-%Y') %> (<%= p.age %> jaar)</span></td>
+                            <td class="caps"><%= p.computed_caps %></td>
+                            <td class="goals"><%= p.computed_goals %></td>
+                            <td class="club"><span class="club"><%= flag(p.club.country.isoAlpha2Code, 32) %><%= p.club.name %></span></td>
+                        </tr>
+                        <% specialrow = false %>
+                    <% end %>
+                    <% specialrow = true %>
+                    <% @team.attackers.each do |p| %>
+                        <tr class="<%= 'marker' if specialrow %>">
+                            <td class="pos"><abbr title="Aanvaller">av</abbr></td>
+                            <td class="name">
+                                <div class="player">
+                                    <a href="<%= team_player_path(@team, p) %>">
+                                        <span class="shirt"><span class="number"><%= p.number %></span></span><span class="name"><%= p.fullname.strip %></span>
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="dob"><span class="visible-md visible-lg"><%= p.dateOfBirth.strftime('%-d') %> <%= (I18n.t p.dateOfBirth.strftime('%B')).downcase %> <%= p.dateOfBirth.strftime('%Y') %> (<%= p.age %> jaar)</span><span class="visible-sm"><%= p.dateOfBirth.strftime('%d-%m-%Y') %> (<%= p.age %> jaar)</span></td>
+                            <td class="caps"><%= p.computed_caps %></td>
+                            <td class="goals"><%= p.computed_goals %></td>
+                            <td class="club"><span class="club"><%= flag(p.club.country.isoAlpha2Code, 32) %><%= p.club.name %></span></td>
+                        </tr>
+                        <% specialrow = false %>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

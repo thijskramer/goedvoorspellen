@@ -1,0 +1,26 @@
+<h1>Listing coaches</h1>
+<%= link_to 'New Coach', new_admin_coach_path, :class => 'btn btn-success' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Country</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @coaches.each do |coach| %>
+      <tr>
+        <td><%= coach.firstName %></td>
+        <td><%= coach.lastName %></td>
+        <td><%= flag(coach.country.isoAlpha2Code) %><%= coach.country.dutchName %></td>
+        <td><%= link_to 'Edit', edit_admin_coach_path(coach), :class => 'btn btn-primary btn-sm' %></td>
+        <td><%= link_to 'Destroy', admin_coach_path(coach), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

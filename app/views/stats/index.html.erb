@@ -1,0 +1,146 @@
+<% content_for :browsertitle do %>
+Stats
+<% end %>
+<% content_for :title do %>
+    Statistieken
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="Statistieken omtrent het WK 2014" />
+<meta property="og:description" content="Topscorers, kaartenscorers en airmiles-scorers op WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="stats">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="<%= topscorers_path %>" class="block stats-block">
+                <p>
+                    <% numtopscorers = @topscorers.length %>
+                    <% @topscorers.each_with_index do |ts, i| %>
+                        <span class="subject"><%= flag(ts.country.isoAlpha2Code) %><%= ts.name %></span><%= (i+2) < numtopscorers ? "," : ((i+1) == numtopscorers ? "" : " en") %>
+                    <% end %>
+                    <%= numtopscorers == 1 ? "is" : "zijn" %> met
+                </p>
+                <div class="amount">
+                    <div class="number"><%= @numgoals %></div>
+                    <div class="lbl">doelpunt<%= "en" unless @numgoals == 1 %></div>
+                </div>
+                <p>topscorer van het WK.</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="<%= teamgoals_path %>" class="block stats-block">
+                <p>
+                <% numteams = @scoringteams.length %>
+                <% @scoringteams.each_with_index do |st, i| %>
+                    <span class="subject"><%= flag(st.country.isoAlpha2Code) %><%= st.name %></span><%= (i+2) < numteams ? "," : ((i+1) == numteams ? "" : " en") %>
+                <% end %>
+                <%= numteams == 1 ? "is" : "zijn" %> met
+                </p>
+
+                <div class="amount">
+                    <div class="number"><%= @numteamgoals %></div>
+                    <div class="lbl">doelpunten</div>
+                </div>
+                <p>het meest scorende team op dit WK.</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="block stats-block">
+                <p><span class="subject"><%= flag(@oudsteteam.country.isoAlpha2Code) %><%= @oudsteteam.name %></span> is met gemiddeld </p>
+                <div class="amount">
+                    <div class="number"><%= number_to_human(@oudsteteam.average_age, precision: 1, seperator: ",", significant: false, strip_insignificant_zeros: false) %></div>
+                    <div class="lbl">jaar</div>
+                </div>
+                <p>het oudste team op het WK.</p>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="block stats-block">
+                <p>Scheidsrechter <span class="subject"><%= flag(@referee.country.isoAlpha2Code) %><%= @referee.name %></span> heeft</p>
+                <div class="doubleamount">
+                    <div class="amount">
+                        <div class="number"><%= @referee.redcards %></div>
+                        <div class="lbl">rode kaart<%= "en" unless @referee.redcards == 1 %></div>
+                    </div>
+                    <div class="amount">
+                        <div class="number"><%= @referee.yellowcards %></div>
+                        <div class="lbl">gele kaart<%= "en" unless @referee.yellowcards == 1 %></div>
+                    </div>
+                </div>
+
+                <p>uitgedeeld en is daarmee koploper.</p>
+            </div>
+        </div>
+
+        
+
+        <div class="col-md-4">
+            <a href="<%= statsclubs_path %>" class="block stats-block">
+                <% numclubs = @clubs.length %>
+                <p>
+                    <% @clubs.each_with_index do |c, i| %>
+                        <span class="subject"><%= flag(c.country.isoAlpha2Code) %><%= c.name %></span><%= (i+2) < numclubs ? "," : ((i+1) == numclubs ? "" : " en") %>
+                    <% end %> 
+                    <%= numclubs == 1 ? "is" : "zijn" %> met </p>
+                <div class="amount">
+                    <div class="number"><%= @clubs.first.wkplayers.count %></div>
+                    <div class="lbl">spelers</div>
+                </div>
+                <p>het best vertegenwoordigd op dit WK.</p>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="block stats-block">
+                <p><span class="subject"><%= flag(@jongsteteam.country.isoAlpha2Code) %><%= @jongsteteam.name %></span> is met gemiddeld </p>
+                <div class="amount">
+                    <div class="number"><%= number_to_human(@jongsteteam.average_age, precision: 1, seperator: ",", significant: false, strip_insignificant_zeros: true) %></div>
+                    <div class="lbl">jaar</div>
+                </div>
+                <p>het jongste team op het WK.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="block stats-block">
+                <p>Er worden op dit moment gemiddeld</p>
+                    <div class="amount">
+                        <div class="number"><%= number_to_human(@avggoals, precision: 2, seperator: ",", significant: false, strip_insignificant_zeros: false) %></div>
+                        <div class="lbl">doelpunten</div>
+                    </div>
+                <p>per wedstrijd op dit WK gescoord.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block stats-block">
+                <p><span class="subject"><%= flag(@mostbookedteam.country.isoAlpha2Code) %><%= @mostbookedteam.name %></span> heeft</p>
+                <div class="doubleamount">
+                    <div class="amount">
+                        <div class="number"><%= @mostbookedteam.redcards %></div>
+                        <div class="lbl">rode kaart<%= "en" unless @mostbookedteam.redcards == 1 %></div>
+                    </div>
+                    <div class="amount">
+                        <div class="number"><%= @mostbookedteam.yellowcards %></div>
+                        <div class="lbl">gele kaart<%= "en" unless @mostbookedteam.yellowcards == 1 %></div>
+                    </div>
+                </div>
+                <p>ontvangen; het meeste van alle teams.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="block stats-block">
+                <p><span class="subject"><%= flag(@mostexperiencedteam.country.isoAlpha2Code) %><%= @mostexperiencedteam.name %></span> is met gemiddeld</p>
+                <div class="amount">
+                    <div class="number">
+                        <%= number_to_human(@mostexperiencedteam.avgcaps, precision: 2, seperator: ",", significant: false, strip_insignificant_zeros: true) %>
+                    </div>
+                    <div class="lbl">interlands</div>
+                </div>
+                <p>het meest ervaren team op dit WK.</p>
+            </div>
+        </div>
+    </div>
+</div>

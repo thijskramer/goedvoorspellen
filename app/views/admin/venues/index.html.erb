@@ -1,0 +1,31 @@
+<h1>Listing venues</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>Timezone</th>
+      <th>Capacity</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @venues.each do |venue| %>
+      <tr>
+        <td><%= link_to venue.name, admin_venue_path(venue) %></td>
+        <td><%= venue.city %></td>
+        <td><%= venue.timezone %></td>
+        <td><%= number_with_delimiter(venue.capacity, :delimiter => '.') %></td>
+        <td><%= link_to 'Edit', edit_admin_venue_path(venue), :class => 'btn btn-primary btn-sm' %></td>
+        <td><%= link_to 'Destroy', admin_venue_path(venue), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Venue', new_admin_venue_path %>

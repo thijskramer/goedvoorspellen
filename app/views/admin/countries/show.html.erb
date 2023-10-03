@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @country.name %>
+</p>
+
+<p>
+  <strong>Dutchname:</strong>
+  <%= @country.dutchName %>
+</p>
+
+<p>
+  <strong>Isoalpha2code:</strong>
+  <%= @country.isoAlpha2Code %>
+</p>
+
+<p>
+  <strong>Isoalpha3code:</strong>
+  <%= @country.isoAlpha3Code %>
+</p>
+
+<p>
+  <strong>Isonumericcode:</strong>
+  <%= @country.isoNumericCode %>
+</p>
+
+<p>
+  <strong>Fifacode:</strong>
+  <%= @country.FIFAcode %>
+</p>
+
+<%= link_to 'Edit', edit_country_path(@country) %> |
+<%= link_to 'Back', countries_path %>

@@ -1,0 +1,32 @@
+<% content_for :browsertitle do %>
+Doelpunten per team
+<% end %>
+<% content_for :title do %>
+    <a href="<%= stats_path %>">Stats</a>
+    <span class="separator">&rsaquo;</span>
+    Doelpunten per team
+<% end %>
+<% content_for :metatags do %>
+    <meta property="og:title" content="Doelpunten per team op het WK 2014" />
+    <meta property="og:description" content="Doelpunten per team op het WK 2014 in Brazilië." />
+<% end %>
+
+<div class="stats">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="rankingtable">
+                <table class="keyvalue">
+                    <% lastamount = 0 %>
+                    <% @teams.each_with_index do |t, i| %>
+                    <tr>
+                        <td class="rank"><% if lastamount != t.wkgoals %><%= i+1 %>.<% end %></td>
+                        <td class="name"><a href="<%= team_path(t) %>"><%= flag(t.country.isoAlpha2Code) %><%= t.name %></a></td>
+                        <td class="points"><span class="amount"><%= t.wkgoals %></span><span class="pointslabel">goals</span></td>
+                    </tr>
+                    <% lastamount = t.wkgoals %>
+                    <% end %>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

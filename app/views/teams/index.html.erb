@@ -1,0 +1,24 @@
+<% content_for :browsertitle do %>
+Deelnemende landen
+<% end %>
+<% content_for :title do %>
+  Landen
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="Deelnemende landen" />
+<meta property="og:description" content="Een overzicht van alle deelnemende landen aan het WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="teamlist">
+    <div class="row">
+        <% @teams.each_with_index do |team, index| %>
+        <div class="col-md-3 col-sm-4 col-xs-12">
+            <a class="team" href="<%= team_path(team) %>">
+              <div class="logo"><%= image_tag team.logo(:medium) %></div>
+              <h2><%= team.name %></h2>
+              <span class="glyphicon glyphicon-chevron-right visible-xs icon"></span>
+            </a>
+        </div>
+        <% end %>
+    </div>
+</div>

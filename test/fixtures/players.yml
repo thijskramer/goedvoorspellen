@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  firstName: 
+  lastName: 
+  country_id: 
+  position: 
+  club_id: 
+  number: 
+  isCaptain: 
+  isViceCaptain: 
+  caps: 
+  goals: 
+  dateOfBirth: 
+  inSquad: false
+
+two:
+  firstName: 
+  lastName: 
+  country_id: 
+  position: 
+  club_id: 
+  number: 
+  isCaptain: 
+  isViceCaptain: 
+  caps: 
+  goals: 
+  dateOfBirth: 
+  inSquad: false

@@ -1,0 +1,27 @@
+<h1>Listing match_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @match_types.each do |match_type| %>
+      <tr>
+        <td><%= match_type.name %></td>
+        <td><%= link_to 'Show', admin_match_type_path(match_type) %></td>
+        <td><%= link_to 'Edit', edit_admin_match_type_path(match_type) %></td>
+        <td><%= link_to 'Destroy', admin_match_type_path(match_type), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Match type', new_admin_match_type_path %>

@@ -1,0 +1,17 @@
+<h3>Spelers van <%= @club.name %></h3>
+<div class="rankingtable">                
+    <table class="keyvalue">
+        <% lastcountryid = 0 %>
+        <% @players.each do |p| %>
+        <% if lastcountryid != p.country_id %>
+        <tr>
+            <th><%= flag(p.country.isoAlpha2Code, 48) %><%= p.country.dutchName %></th>
+        </tr>
+        <% end %>
+        <tr>
+            <td class="name"><%= p.name %></td>
+        </tr>
+        <% lastcountryid = p.country_id %>
+        <% end %>
+    </table>
+</div>

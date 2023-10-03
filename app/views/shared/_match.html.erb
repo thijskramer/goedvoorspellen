@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-12">
+        <a class="match-card" href="<%= match_path(match) %>">
+            <header>
+                <span class="matchdatetime">
+                    <span class="matchdate">
+                        <%= match.startDate.strftime('%d') %> <%= (I18n.t match.startDate.strftime('%B')).downcase %>
+                        - 
+                        <%= match.startDate.strftime('%H:%M') %>
+                    </span>
+                </span>
+            </header>
+            <section class="<%= 'has-penalties' if match.penalties.count > 0 %>">
+                <% if show_group || show_stage %>
+                    <span class="stage">
+                        <% if show_group && match.matchtype_id == 1 %>
+                            <span class="lbl">Groep</span>
+                            <span class="groupname"><%= match.group %></span>
+                        <% end %>
+                    </span>
+                <% end %>
+                <div class="match-number">#<%= match.number %></div>
+                <div class="opponents">
+                    <div class="home">
+                        <div class="team <%= match.hometeam.country.isoAlpha2Code.downcase unless match.hometeam_id.nil? %>">
+                            <% unless match.hometeam_id.nil? %>
+                                <%= match.hometeam.name %><br />
+                                <% if match.penalties.count > 0 && (match.homepenalties_scored > match.awaypenalties_scored) %>
+                                    <span class="wns">(w.n.s.)</span>
+                                <% end %> 
+                                <%= flag(match.hometeam.country.isoAlpha2Code, 48) %>
+                            <% else %>
+                                <%= match.homePlaceholder %>
+                            <% end %>
+                        </div>
+                        <div class="score">
+                            <%= match.homeScore == nil ? "-" : match.homeScore %>
+                        </div>
+                    </div>
+                    <div class="away">
+                        <div class="score">
+                            <%= match.awayScore == nil ? "-" : match.awayScore %>
+                        </div>
+                        <div class="team <%= match.awayteam.country.isoAlpha2Code.downcase unless match.awayteam_id.nil? %>">
+                            <% if match.awayteam_id != nil %>
+                                <%= flag(match.awayteam.country.isoAlpha2Code, 48) %> <%= match.awayteam.name %><br />
+                                <% if match.penalties.count > 0 && (match.awaypenalties_scored > match.homepenalties_scored) %>
+                                    <span class="wns">(w.n.s.)</span>
+                                <% end %> 
+                            <% else %>
+                                <%= match.awayPlaceholder %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <div class="venue">
+                    <!-- <div class="stadiumlabel">Stadion:</div> -->
+                    <div class="stadium"><%= match.stadium.name %>,</div>
+                    <div class="city"><%= match.stadium.city %></div>
+                </div>
+                <% if match.penalties.count > 0 %>
+                    <div class="penalties">
+                        <div class="scores">
+                            <div class="score home">
+                                <%= match.homepenalties_scored %>
+                            </div>
+                            <div class="score away">
+                                <%= match.awaypenalties_scored %>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </section>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<% content_for :browsertitle do %>
+Groepen
+<% end %>
+<% content_for :title do %>
+    Groepen
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="De groepsindeling op het WK 2014" />
+<meta property="og:description" content="De rangen, standen en groepsindeling van alle deelnemende landen aan het WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="grouplist">
+  <div class="row">
+        <% @groups.each_with_index do |group, i| %>
+                <div class="col-md-6<% if i%2 > 0 %> last<% end %>">
+                    <%= render 'shared/group', :group => group, :title => true %>
+                </div>
+                <% if i%2 > 0 %></div><div class="row"><% end %>
+        <% end %>
+      </div>
+</div>

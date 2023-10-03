@@ -1,0 +1,26 @@
+<div class="group">
+      <table>
+        <tr>
+          <th class="group<% if title %> with-title <% end %>"><% if title %>
+                <h3><a href="<%= group_path(group) %>">Groep <span class="name"><%= group.name %></span></a></h3>
+            <% end %>&nbsp;</th>
+          <th class="played"><abbr title="Gespeeld">G</abbr></th>
+          <th class="won"><abbr title="Gewonnen">W</abbr></th>
+          <th class="draw"><abbr title="Gelijk gespeeld">G</abbr></th>
+          <th class="lost"><abbr title="Verloren">V</abbr></th>
+          <th class="points"><abbr title="Punten">P</abbr></th>
+          <th class="goals"><abbr title="Doelsaldo">DS</abbr></th>
+        </tr>
+        <% group.rankings.each_with_index do |r, i| %>
+            <tr class="<%= 'line' if i == 2 %>">
+              <td class="team"><a href="<%= team_path(r.team) %>"><%= flag(r.team.country.isoAlpha2Code, 48) %><%= r.team.name %></a></td>
+              <td class="played"><%= r.played.to_s == "" ? 0 : r.played %></td>
+              <td class="won"><%= r.won.to_s == "" ? 0 : r.won %></td>
+              <td class="draw"><%= r.draw.to_s == "" ? 0 : r.draw %></td>
+              <td class="lost"><%= r.lost.to_s == "" ? 0 : r.lost %></td>
+              <td class="points"><%= r.points.to_s == "" ? 0 : r.points %></td>
+              <td class="goals"><%= r.scored.to_s == "" ? 0 : r.scored %>-<%= r.received.to_s == "" ? 0 : r.received %> (<%= r.saldo > 0 ? "+" : "" %><%= r.saldo %>)</td>
+            </tr>
+        <% end %>
+      </table>
+</div>

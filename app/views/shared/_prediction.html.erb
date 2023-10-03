@@ -1,0 +1,107 @@
+<div class="prediction<%= ' now-playing' if pred.match.nowplaying %><%= ' has-penalties' if pred.match.penalties.count > 0 %>">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="match-card">
+                <header>
+                    <span class="matchdatetime">
+                        <span class="matchdate">
+                            <%= pred.match.startDate.strftime('%d') %> <%= (I18n.t pred.match.startDate.strftime('%B')).downcase %>
+                            - 
+                            <%= pred.match.startDate.strftime('%H:%M') %> uur
+                        </span>
+                    </span>
+                </header>
+                <section>
+                    <span class="stage">
+                        <% if pred.match.matchtype_id == 1 %>
+                            <span class="lbl">Groep</span>
+                            <span class="groupname"><%= pred.match.group %></span>
+                        <% elsif pred.match.matchtype_id == 2 %>
+                            <span class="groupname">achtste</span>
+                            <span class="lbl">finale</span>
+                        <% elsif pred.match.matchtype_id == 3 %>
+                            <span class="groupname">kwart</span><span class="lbl">finale</span>
+                        <% elsif pred.match.matchtype_id == 4 %>
+                            <span class="groupname">halve</span>
+                            <span class="lbl">finale</span>
+                        <% elsif pred.match.matchtype_id == 5 %>
+                            <span class="groupname">3e / 4e plaats</span>
+                        <% elsif pred.match.matchtype_id == 6 %>
+                            <span class="groupname">finale</span>
+                        <% end %>
+
+                    </span>
+                    <div class="opponents">
+                        <div class="home">
+                            <div class="team <%= pred.match.hometeam.country.isoAlpha2Code.downcase unless pred.match.hometeam_id.nil? %>">
+                                <% unless pred.match.hometeam_id.nil? %>
+                                    <%= pred.match.hometeam.name %> <%= flag(pred.match.hometeam.country.isoAlpha2Code, 48) %>
+                                    <% if pred.match.penalties.count > 0 && (pred.match.homepenalties_scored > pred.match.awaypenalties_scored) %>
+                                        <span class="wns">(w.n.s.)</span>
+                                    <% end %> 
+                                <% else %>
+                                    <%= pred.match.homePlaceholder %>
+                                <% end %>
+                            </div>
+                            <div class="score">
+                                <%= pred.match.homeScore == nil ? "-" : pred.match.homeScore %>
+                            </div> 
+                        </div>
+                        <div class="away">
+                            <div class="score">
+                                <%= pred.match.awayScore == nil ? "-" : pred.match.awayScore %>
+                            </div>
+                            <div class="team <%= pred.match.awayteam.country.isoAlpha2Code.downcase unless pred.match.awayteam_id.nil? %>">
+                                <% if pred.match.awayteam_id != nil %>
+                                    <%= flag(pred.match.awayteam.country.isoAlpha2Code, 48) %> <%= pred.match.awayteam.name %>
+                                    <% if pred.match.penalties.count > 0 && (pred.match.homepenalties_scored < pred.match.awaypenalties_scored) %>
+                                        <span class="wns">(w.n.s.)</span>
+                                    <% end %> 
+                                <% else %>
+                                    <%= pred.match.awayPlaceholder %>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="glyphicon glyphicon-time now-playing-icon" title="Wedstrijd is nu bezig"></span>
+                    <a href="<%= match_path(pred.match) %>" class="stats-link"><span class="glyphicon glyphicon-stats" title="Bekijk wedstrijdgegevens"></span></a>
+                </section>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pred-label visible-xs">Voorspelling:</div>
+            <% if pred.match.started %>
+                 <div class="fields">
+                    <div class="field readonly"><%= pred.home_score %></div>
+                    <span class="sep">-</span>
+                    <div class="field readonly"><%= pred.away_score %></div>
+                </div>
+            <% end %>
+            <% if pred.match.done %>
+                <div class="predictionscore">
+                    <div class="points"><%= pred.points %></div>
+                    <div class="lbl">punten</div>
+                </div>
+            <% end %>
+            <% if pred.match.nowplaying %>
+                <div class="match-timer" data-date="<%= pred.match.startDate.strftime('%Y-%m-%d-%H-%M') %>">
+                    <div class="minute"><span>1</span><sup>e</sup></div>
+                    <div class="lbl">minuut</div>
+                </div>
+            <% end %>
+            <% unless pred.match.started %>
+                <%= form_for(pred, remote: true, :html => {:'data-type' => 'json'}) do |f| %>
+                    <%= f.hidden_field :match_id %>
+                    <div class="fields">
+                        <%= f.telephone_field :home_score, :maxlength => 2, :placeholder => "..." %>
+                        <span class="sep">-</span>
+                        <%= f.telephone_field :away_score, :maxlength => 2, :placeholder => "..." %>
+                    </div>
+                    <div class="icon">
+                        <div class="check"><span class="glyphicon glyphicon-ok"></span> Opgeslagen</div>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'matchmenu' %>
+  </div>
+  <div class="col-md-9">
+    <div class="row">
+      <div class="col-xs-6">    
+        <table class="listtable playeredit table table-striped table-hover">
+          <thead>
+              <tr>
+                  <th data-bind="text: homeTeamName" colspan="3"></th>
+                  <th data-bind="text: numHome"></th>
+              </tr>
+          </thead>
+          <tbody data-bind="template: { name: 'playerTemplate', foreach: homePlayers}"></tbody>
+        </table>
+      </div>
+      <div class="col-xs-6">
+        <table class="listtable playeredit table table-striped table-hover">
+          <thead>
+              <tr>
+                  <th data-bind="text: awayTeamName" colspan="3"></th>
+                  <th data-bind="text: numAway"></th>
+              </tr>
+          </thead>
+          <tbody data-bind="template: { name: 'playerTemplate', foreach: awayPlayers}"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<template type="text/html" id="playerTemplate">
+    <tr data-bind="css: {'isNotPlaying': !isPlaying()}">
+        <td style="width: 2px;" data-bind="text: number"></td>
+        <td data-bind="text: Name, click: toggleIsPlaying"></td>
+        <td style="width: 2px;" data-bind="text: position"></td>
+        <td style="text-align: right;">
+            <span data-bind="visible: isPlaying, click: toggleIsPlaying" class="glyphicon glyphicon-ok"></span>
+            <span data-bind="visible: !isPlaying(), click: toggleIsPlaying" class="glyphicon glyphicon-remove"></span>
+        </td>
+    </tr>
+</template>
+<script type="text/javascript">
+    ko.observableArray.fn.find = function(prop, data) {
+        var valueToMatch = data[prop];
+        return ko.utils.arrayFirst(this(), function(item) {
+            return item[prop] === valueToMatch; 
+        });
+    };
+
+    var Player = function (data, parent) {
+        var self = this;
+        self.Name = data.name;
+        self.TeamId = data.team_id;
+        self.Id = data.id;
+        self.isPlaying = ko.observable(data.isPlaying);
+        self.positionId = ko.observable(data.position);
+        self.position = ko.computed(function() {
+          if(self.positionId() === 1) {
+            return "K"
+          }
+          if(self.positionId() === 2) {
+            return "V"
+          }
+          if(self.positionId() === 3) {
+            return "M"
+          }
+          if(self.positionId() === 4) {
+            return "A"
+          }
+        });
+        self.number = data.number;
+        self.toggleIsPlaying = function () {
+            $.post("/admin/lineups/toggle_lineup", { match_id: parent.matchId, player_id: self.Id, team_id: self.TeamId }, function (response) {
+                self.isPlaying(!self.isPlaying());
+            });
+        };
+    };
+
+    var LineupViewModel = function (id) {
+        var self = this;
+        self.homePlayers = ko.observableArray();
+        self.awayPlayers = ko.observableArray();
+        self.homeTeamName = ko.observable("");
+        self.awayTeamName = ko.observable("");
+        self.homesubstitutes = ko.computed(function() {
+            return self.homePlayers().filter(function (o) {
+                return o.isPlaying() == false;
+            });
+        });
+        self.numHome = ko.computed(function () {
+            var actives = self.homePlayers().filter(function (o) {
+                return o.isPlaying() == true;
+            });
+            return actives.length;
+        });
+        self.numAway = ko.computed(function () {
+            var actives = self.awayPlayers().filter(function (o) {
+                return o.isPlaying() == true;
+            });
+            return actives.length;
+        });
+        self.matchId = ko.observable(id);
+        $.getJSON("/admin/lineups/players.json", {match_id: id}, function (data) {
+            var homePlayers = $.map(data.homeplayers, function (item) { return new Player(item, self); });
+            self.homePlayers(homePlayers);
+            self.homePlayers.sort(function(left, right) { return left.positionId() == right.positionId() ? 0 : (left.positionId() < right.positionId() ? -1 : 1) });
+            var awayPlayers = $.map(data.awayplayers, function (item) { return new Player(item, self); });
+            self.awayPlayers(awayPlayers);
+            self.awayPlayers.sort(function(left, right) { return left.positionId() == right.positionId() ? 0 : (left.positionId() < right.positionId() ? -1 : 1) });
+
+            self.homeTeamName(data.homeTeamName);
+            self.awayTeamName(data.awayTeamName);
+        });
+    };
+    ko.applyBindings(new LineupViewModel(<%= @match.id %>));
+</script>

@@ -1,0 +1,137 @@
+@import 'variables';
+@import '../bourbon/bourbon';
+.group {
+  $border-left-color: #ddd;
+  $border-bottom-color: #bbb;
+  $cellpadding: 10px 15px;
+  $smallcellpadding: 6px 6px;
+  margin-bottom: 30px;
+  // border-bottom: 1px solid $bordercolor;
+  // padding-bottom: 30px;
+  // padding-right: 10px;
+  background: #fff;
+  table {
+    width: 100%;
+    font-size: 16px;
+    @media(max-width: 600px) {
+      font-size: 12px;
+    }
+    tr {
+      th {
+        border-bottom: 2px solid $border-bottom-color;
+        text-align: center;
+        border-left: 1px solid $border-left-color;
+        padding: $cellpadding;
+        @media(max-width: 540px) {
+          padding: $smallcellpadding;
+        }
+        &.group {
+          border-left: 0;
+          &.with-title {
+            text-align: left;
+            padding: 0;
+            h3 {
+              display: inline-block;
+              padding-right: 20px;
+              font-size: 18px;
+              margin: 0;
+              background: rgba(0,0,0,0.85);
+              @media(max-width: 600px) {
+                font-size: 16px;
+              }
+              a {
+                color: #fff;
+                padding-top: 6px;
+                padding-bottom: 5px;
+                padding-right: 0px;
+                display: inline-block;
+                @include transition(all 0.2s ease-in-out);
+                span.name {
+                  color: $green;
+                  @include transition(all 0.2s ease-in-out);
+                  font-size: 22px;
+                  @media(max-width: 600px) {
+                    font-size: 17px;
+                  }
+                  display: inline-block;
+                }
+                &:hover {
+                  text-decoration: none;
+                  padding-right: 10px;
+                  span.name {
+                    color: $yellow;
+                  }
+                }
+              }
+            }
+          }
+        }
+        &.goals {
+          text-align: left;
+        }
+      }
+      td {
+        padding: $cellpadding;
+        @media(max-width: 540px) {
+          padding: $smallcellpadding;
+        }
+        text-align: center;
+        border-left: 1px solid $border-left-color;
+        white-space: nowrap;
+        border-bottom: 1px solid $border-bottom-color;
+        &.team {
+          text-align: left;
+          border-left: 0;
+          width: 100%;
+          padding-left: 10px;
+          a {
+            position: relative;
+            padding-left: 29px;
+            white-space: normal;
+            display: inline-block;
+            text-decoration: underline;
+            .flag {
+              position: absolute;
+              left: 0;
+              top: 50%;
+              margin-top: -12px;
+            }
+            &:hover {
+                text-decoration: none;
+            }
+          }
+          
+        }
+        &.goals {
+          text-align: left;
+        }
+      }
+      &:last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.grouplist {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  // .last {
+  //   border-left: 1px solid $bordercolor;
+  //   .group {
+  //     padding-right: 0;
+  //     padding-left: 10px;
+  //   }
+  // }
+  @media(max-width: 767px) {
+    .group, .last .group {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

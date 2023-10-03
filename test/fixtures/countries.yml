@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  dutchName: MyString
+  isoAlpha2Code: MyString
+  isoAlpha3Code: MyString
+  isoNumericCode: 1
+  FIFAcode: MyString
+
+two:
+  name: MyString
+  dutchName: MyString
+  isoAlpha2Code: MyString
+  isoAlpha3Code: MyString
+  isoNumericCode: 1
+  FIFAcode: MyString

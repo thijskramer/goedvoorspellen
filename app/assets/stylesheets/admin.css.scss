@@ -1,0 +1,120 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ 
+ */
+//= require base
+
+@import "twitter/bootstrap";
+@import 'icons';
+@import 'admin.prettify';
+@import 'admin.wysihtml5';
+
+.number {
+	font-family: "Montserrat";
+	font-weight: 700;
+	font-size: 18px;
+}
+.matchrow {
+	cursor: pointer;
+}
+
+.listtable.playeredit {
+	tr {
+		td {
+			cursor: pointer;
+			span.glyphicon.glyphicon-remove {
+				color: #f00;
+			}
+			span.glyphicon.glyphicon-ok {
+				color: #04BB04;
+			}
+		}
+	}
+	tr.isNotPlaying {
+		opacity: 0.6;
+	}
+}
+
+.goalform, .bookingform, .substitute-form {
+	input[type='number'] {
+		width: 60px;
+		display: inline-block;
+		&[maxlength='3'] {
+			width: 67px;
+		}
+	}
+	select {
+		display: inline-block;
+		width: auto;
+		max-width: 100%;
+	}
+}
+.scores {
+	table {
+		td.home {
+			border-right: 1px solid #ccc;
+			max-width: 50%;
+
+		}
+		td.away {
+			border-left: 1px solid #ccc;
+			max-width: 50%;
+		}
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			li {
+				padding-top: 2px;
+				padding-bottom: 2px;
+				position: relative;
+				padding-left: 20px;
+				&.goal {
+					&:before {
+						@include icon-football;
+						position: absolute;
+						top: 5px;
+						left: 0;
+					}
+				}
+				.minute {
+					font-size: 12px;
+				}
+				.remove {
+					position: absolute;
+					right: 0;
+					top: 2px;
+					padding-right: 20px;
+					a:before {
+						@include icon-cross;
+						position: absolute;
+						right: 0;
+						top: 2px;
+						font-size: 16px;
+					}
+				}
+			}
+		}
+	}
+}
+.green {
+	color: #32BA00;
+}
+.red {
+	color: #f00;
+}
+table {
+	tr.notinsquad {
+		td {
+			color: #999;
+		}
+	}
+}

@@ -1,0 +1,24 @@
+<% content_for :browsertitle do %>
+Stadions
+<% end %>
+<% content_for :title do %>
+  Stadions
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="Stadions" />
+<meta property="og:description" content="Een ovezicht van alle stadions waarin wedstrijden gespeeld worden op het WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="venuelist">
+    <div class="row">
+        <% @venues.each_with_index do |venue, index| %>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <a class="venue" href="<%= venue_path(venue) %>">
+              <div class="logo"><%= image_tag venue.picture(:thumb) %></div>
+              <h2><%= venue.name %></h2>
+              <span class="subtitle"><%= venue.city %></span>
+            </a>
+        </div>
+        <% end %>
+    </div>
+</div>

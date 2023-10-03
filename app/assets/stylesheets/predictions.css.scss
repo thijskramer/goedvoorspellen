@@ -1,0 +1,374 @@
+// Place all the styles related to the Predictions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'variables';
+@import '../bourbon/bourbon';
+.prediction-info-alert {
+    .glyphicon {
+        position: absolute;
+        left: 12px;
+        top: 17px;
+        font-size: 20px;
+    }
+    a {
+        color: $green;
+        text-decoration: underline;
+    }
+}
+.prediction {
+    @media(max-width: 767px) {
+        margin-bottom: 15px;
+    }
+    .now-playing-icon {
+        display: none;
+    }
+    &.now-playing {
+        .now-playing-icon {
+            display: block;
+            position: absolute;
+            right: 36px;
+            top: 13px;
+            font-size: 24px;
+            color: $green;
+            @media(max-width: 767px) {
+                top: auto;
+                bottom: -33px;
+                right: 61px;
+                z-index: 100;
+            }
+        }
+    }
+    &.has-penalties {
+        .match-card > section {
+            height: 54px;
+            @media(max-width: 767px) { 
+                height: 62px;
+            }
+        }
+    }
+    .stats-link {
+        position: absolute;
+        right: 12px;
+        top: 13px;
+        font-size: 20px;
+        color: #949494;
+        &:hover {
+            color: #333;
+        }
+        @media(max-width: 767px) {
+            right: 4px;
+            top: 15px;
+            font-size: 18px;
+        }
+    }
+    .prediction-arrow-title {
+        position: relative;
+        @media(max-width: 767px) {
+            display: none;
+        }
+        h3 {
+            position: absolute;
+            padding-right: 32px;
+            left: -164px;
+            top: -40px;
+            span {
+                font-size: 20px;
+                position: absolute;
+                right: 6px;
+                top: 5px;
+                color: #fff;
+            }
+        }
+    }
+    .match-card {
+        padding-top: 0px;
+        margin-bottom: 7px;
+        @media(max-width: 767px) {
+                padding-top: 16px;
+            }
+        &:hover {
+            border-bottom: 0;
+            margin-bottom: 7px;
+        }
+        > section {
+            height: 48px;
+            padding-top: 12px;
+            @media(max-width: 767px) {
+                 height: auto;
+                 padding-top: 0;
+            }
+        }
+        > header {
+            top: -1px;
+            @media(max-width: 767px) {
+                top: -3px;
+            }
+        }
+        .matchdatetime {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .opponents .home .team, 
+        .opponents .away .team {
+            font-size: 20px;
+            @media(max-width: 767px) {
+                font-size: 14px;
+            }
+            &.nl {
+                color: #FF7B00;
+            }
+            .wns {
+                right: 63px;
+                top: 27px;
+                font-size: 13px;
+                @media(max-width: 767px) {
+                    right: 48px;
+                    font-size: 10px;
+                    top: 21px;
+                }
+
+            }
+        }
+        .score {
+            font-size: 24px;
+            width: 27px;
+            margin-top: -5px;
+            @media(max-width: 767px) {
+                font-size: 18px;
+                width: 20px;
+                margin-top: -2px;
+            }
+        }
+        .opponents .home {
+            .team {
+                padding-right: 63px;
+                @media(max-width: 767px) {
+                    padding-right: 48px;
+                }
+                .flag {
+                    right: 35px;
+                    @media(max-width: 767px) {
+                        right: 27px;
+                    }
+                    top: 2px;
+                }
+                &.ba {
+                    font-size: 18px;
+                    padding-top: 5px;
+                }
+            }
+            .score {
+                right: 2px;
+            }
+        }
+        .opponents .away {
+            .team {
+                padding-left: 63px;
+                @media(max-width: 767px) {
+                    padding-left: 48px;
+                }
+                .flag {
+                    left: 35px;
+                    top: 2px;
+                    @media(max-width: 767px) {
+                        left: 27px;
+                    }
+                }
+                .wns {
+                    right: auto;
+                    left: 63px;
+                    @media(max-width: 767px) {
+                        left: 48px;
+                    }
+                }
+            }
+        }
+        @media(min-width: 768px) {
+            .stage {
+                left: 0px;
+                padding-left: 10px;
+                top: 24px;
+                width: auto;
+                text-align: left;
+                text-transform: uppercase;
+                .groupname {
+                    font-size: inherit;
+                    line-height: inherit;
+                    display: inline;
+                }
+            }
+        }
+    }
+    @media(max-width: 767px) {
+        .pred-label {
+            position: absolute;
+            left: 20px;
+            bottom: 12px;
+            color: #fff;
+            font-family: $headfont;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+    .fields {
+        padding-top: 4px;
+        display: inline-block;
+        width: 80px;
+        @media(max-width: 767px) {
+            width: 100%;
+            text-align: center;
+            background: rgba(0,0,0,0.85);
+            margin-top: -7px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+        input {
+            font-family: $headfont;
+            text-transform: uppercase;
+            width: 34px;
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            border: 0;
+            font-weight: 700;
+            height: 40px;
+            border-radius: 3px 3px 0 0;
+            background-color: #fff;
+            padding: 0;
+            border-bottom: 3px solid #999;
+            @include transition(all 0.2s ease-in-out);
+            &:focus {
+                background: #fff;
+                outline: 0;
+                border-bottom-color: $green;
+            }
+            &.has-error {
+                color: #f00;
+                border-bottom-color: #f00;
+                &:focus {
+                    border-bottom-color: #f00;
+                }
+            }
+
+            &::-webkit-input-placeholder { line-height: 44px; }
+
+            @media(max-width: 767px) {
+                font-size: 22px;
+                width: 24px;
+                height: 30px;
+            }
+
+        }
+        span.sep {
+            height: 26px;
+            width: 12px;
+            font-family: $headfont;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 28px;
+            line-height: 9px;
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 18px;
+            margin-left: -2px;
+            color: #fff;
+            width: 1px;
+            visibility: hidden;
+            @media(max-width: 767px) {
+                display: none;
+            }
+        }
+        .field.readonly {
+            font-family: $headfont;
+            text-transform: uppercase;
+            width: 34px;
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            border: 0;
+            font-weight: 700;
+            height: 40px;
+            border-radius: 3px;
+            background: #fff;
+            padding-top: 1px;
+            display: inline-block;
+            @media(max-width: 767px) {
+                font-size: 22px;
+                width: 24px;
+                height: 30px;
+            }
+        }
+    }
+    .icon {
+        display: inline-block;
+        .check {
+            @include transition(all 0.4s ease-in-out);
+            opacity: 0;
+            font-family: $headfont;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;    
+            span {
+                color: $green;
+                font-size: 22px;
+            }
+        }
+        @media(max-width: 767px) {
+            position: absolute;
+            bottom: 8px;
+            right: 20px;
+        }
+    }
+    .predictionscore, .match-timer {
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.65);
+        color: #fff;
+        font-family: $headfont;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: top;
+        margin-top: 4px;
+        padding-left: 7px;
+        padding-right: 10px;
+        border-radius: 4px;
+        margin-left: 20px;
+        @media(max-width: 767px) {
+            position: absolute;
+            bottom: 2px;
+            right: 16px;
+        }
+        .points {
+            font-size: 29px;
+            line-height: 25px;
+            padding-top: 2px;
+        }
+        .lbl {
+            font-size: 10px;
+            padding-bottom: 0px;
+            line-height: 13px;
+        }
+    }
+    .match-timer {
+        .minute {
+            font-size: 29px;
+            line-height: 25px;
+            padding-top: 2px;
+            position: relative;
+            display: inline-block;
+            @media(max-width: 767px) {
+                font-size: 22px;
+            }
+            sup {
+                text-transform: none;
+                position: absolute;
+                right: -12px;
+                top: 8px;
+                font-size: 19px;
+            }
+        }
+    }
+}

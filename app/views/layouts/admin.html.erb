@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Goedvoorspellen</title>
+  <%= stylesheet_link_tag 'admin', media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "admin", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Goedvoorspellen Admin</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <!-- <li class="active"><a href="#">Home</a></li> -->
+            <li class="<%= 'active' if params[:controller] == 'admin/matches' %>"><%= link_to "Wedstrijden", admin_matches_path %></li>
+            <li class="<%= 'active' if params[:controller] == 'admin/teams' %>"><%= link_to "Teams", admin_teams_path %></li>
+            <li class="<%= 'active' if params[:controller] == 'admin/coaches' %>"><%= link_to "Coaches", admin_coaches_path %></li>
+            <li class="<%= 'active' if params[:controller] == 'admin/venues' %>"><%= link_to "Stadions", admin_venues_path %></li>
+            <li class="<%= 'active' if params[:controller] == 'admin/clubs' %>"><%= link_to "Clubs", admin_clubs_path %></li>
+            <li class="<%= 'active' if params[:controller] == 'admin/referees' %>"><%= link_to "Scheidsrechters", admin_referees_path %></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Uitloggen?</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+		<%= yield %>      
+    </div>
+
+
+</body>
+</html>

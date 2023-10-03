@@ -1,0 +1,51 @@
+<h1>Listing matches</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Type</th>
+      <th colspan="3">Match</th>
+      <th colspan="3">Score</th>
+      <th>Startdate</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @matches.each do |match| %>
+      <tr class="matchrow" data-url="<%= url_for edit_admin_match_path(match) %>">
+        <td><%= match.number %></td>
+        <td><%= match.match_type.name %></td>
+        <td>
+          <% if match.hometeam_id != nil %>
+            <%= flag(match.hometeam.country.isoAlpha2Code) %><%= match.hometeam.name %>
+          <% else %>
+            <%= match.homePlaceholder %>
+          <% end %>
+        </td>
+        <td>-</td>
+        <td>
+          <% if match.awayteam_id != nil %>
+            <%= flag(match.awayteam.country.isoAlpha2Code) %><%= match.awayteam.name %>
+          <% else %>
+            <%= match.awayPlaceholder %>
+          <% end %>
+        </td>
+        <td><%= match.homeScore %></td>
+        <td>-</td>
+        <td><%= match.awayScore %></td>
+        <td><%= match.startDate.strftime('%d %B %Y %H:%M') %></td>
+        <!--<td><%= link_to 'Destroy', admin_match_path(match), method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<script type="text/javascript">
+  $(function() {
+    $('tr.matchrow').on('click', function() {
+      window.location.href = $(this).data('url');
+    });
+  });
+</script>
+<br>
+
+<%= link_to 'New Match', new_admin_match_path %>

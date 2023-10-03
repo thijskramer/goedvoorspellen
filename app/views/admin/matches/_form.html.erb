@@ -1,0 +1,86 @@
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'matchmenu' unless @match.id.nil? %>
+  </div>
+  <div class="col-md-9">
+    <%= form_for([:admin, @match], :class => 'form-horizontal') do |f| %>
+      <% if @match.errors.any? %>
+            <div class="alert alert-error">
+        <div id="error_explanation">
+          <h2><%= pluralize(@match.errors.count, "error") %> prohibited this match from being saved:</h2>
+
+          <ul>
+          <% @match.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+            </div>
+      <% end %>
+        <div class="form-group row">
+          <%= f.label :number, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-2">
+            <%= f.number_field :number, :class => 'form-control' %>
+          </div>
+
+        </div>
+        <div class="form-group row">
+          <%= f.label :matchtype_id, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-4">
+            <%= f.collection_select :matchtype_id, MatchType.all, :id, :name, {}, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :hometeam_id, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-2">
+            <%= f.text_field :homePlaceholder, :class => 'form-control' %>
+          </div>
+          <div class="col-sm-4">
+            <%= f.collection_select :hometeam_id, Team.all, :id, :name, {prompt: true }, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :awayteam_id, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-2">
+            <%= f.text_field :awayPlaceholder, :class => 'form-control' %>
+          </div>
+          <div class="col-sm-4">
+            <%= f.collection_select :awayteam_id, Team.all, :id, :name, {prompt: true }, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :homeScore, 'Score', :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-2">
+            <%= f.number_field :homeScore, :class => 'form-control' %>
+          </div>
+          <div class="col-sm-2">
+            <%= f.number_field :awayScore, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :stadium_id, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-4">
+            <%= f.collection_select :stadium_id, Venue.all, :id, :city, {prompt: true }, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :referee_id, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-4">
+            <%= f.collection_select :referee_id, Referee.all, :id, :name, {prompt: true }, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group row">
+          <%= f.label :startDate, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%= f.datetime_select :startDate, default: DateTime.new(2014, 6, 9, 17, 0, 0).in_time_zone('Brasilia') %>
+          </div>
+        </div>
+        <div class="actions form-group row">
+          <div class="col-sm-offset-2 col-sm-10">
+            <%= f.submit :class => 'btn btn-primary' %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<ul class="nav nav-pills nav-stacked">
+  <li class="<%= 'active' if params[:action] == 'edit' %>"><a href="<%= edit_admin_match_path(@match) %>">Details</a></li>
+  <li class="<%= 'active' if params[:action] == 'lineup' %>"><a href="<%= admin_match_path(@match) %>/lineup">Opstellingen</a></li>
+  <li class="<%= 'active' if params[:action] == 'substitutes' %>"><a href="<%= admin_match_path(@match) %>/substitutes">Wissels</a></li>
+  <li class="<%= 'active' if params[:action] == 'scores' %>"><a href="<%= admin_match_path(@match) %>/scores">Doelpunten</a></li>
+  <li class="<%= 'active' if params[:action] == 'cards' %>"><a href="<%= admin_match_path(@match) %>/bookings">Kaarten</a></li>
+  <li class="<%= 'active' if params[:action] == 'penalties' %>"><a href="<%= admin_match_path(@match) %>/penalties">Penalty's</a></li>
+</ul>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @venue.name %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @venue.city %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @venue.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @venue.longitude %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @venue.capacity %>
+</p>
+
+<p>
+  <strong>Wikipediaurl:</strong>
+  <a href="<%= @venue.wikipediaUrl %>"><%= @venue.wikipediaUrl %></a>
+</p>
+
+<%= link_to 'Edit', edit_admin_venue_path(@venue), :class => 'btn btn-primary btn-sm' %> |
+<%= link_to 'Back', admin_venues_path %>

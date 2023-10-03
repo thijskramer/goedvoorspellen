@@ -1,0 +1,158 @@
+!!!
+%html.no-js{:lang => "nl"}
+  %head
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    = yield :metatags
+    %meta{:content => request.original_url, :property => "og:url"}/
+    %meta{:content => "Goedvoorspellen.nl", :property => "og:site_name"}/
+    %meta{:content => "#{request.protocol + request.host_with_port}/images/site-preview.jpg", :property => "og:image"}/
+    %meta{:content => "#{request.protocol + request.host_with_port}/images/site-logo-fb.jpg", :property => "og:image"}/
+    %meta{:content => "#{request.protocol + request.host_with_port}/images/favicon-152.png", :name => "msapplication-TileImage"}/
+    %meta{:content => "#000000", :name => "msapplication-TileColor"}/
+    %link{:href => "#{request.protocol + request.host_with_port}/images/favicon-57.png", :rel => "apple-touch-icon"}/
+    %link{:href => "#{request.protocol + request.host_with_port}/images/favicon-76.png", :rel => "apple-touch-icon", :sizes => "76x76"}/
+    %link{:href => "#{request.protocol + request.host_with_port}/images/favicon-120.png", :rel => "apple-touch-icon", :sizes => "120x120"}/
+    %link{:href => "#{request.protocol + request.host_with_port}/images/favicon-152.png", :rel => "apple-touch-icon", :sizes => "152x152"}/
+    %link{:href => "#{request.protocol + request.host_with_port}/images/favicon-32.png", :rel => "icon", :type => "image/png"}/
+    %title= yield(:browsertitle).empty? ? "Goedvoorspellen.nl, Dé site waar je samen met je familie, vrienden of collega's de wedstrijden van het WK 2014 in Brazilië kunt voorspellen!" : yield(:browsertitle) + " - Goedvoorspellen.nl"
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = stylesheet_link_tag 'print', media: 'print', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    :javascript
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-32000910-1', 'goedvoorspellen.nl');
+    = javascript_include_tag 'modernizr', 'data-turbolinks-track' => true
+    /[if lt IE 9]
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
+  %body
+    - if flash[:topnotice]
+      .topbanner
+        %p= flash[:topnotice]
+    %header.site-header
+      .container.logo-container
+        .row
+          .col-md-12
+            %button.navbar-toggle.mainnav{:type => "button"}
+              %span.sr-only Toon navigatie
+              %span.icon-bar
+              %span.icon-bar
+              %span.icon-bar
+            .logo
+              %a{:href => "/"} Goedvoorspellen.nl
+            - if current_user
+              .user-menu.dropdown
+                %a{"data-toggle" => "dropdown", :href => "#"}
+                  %img.hidden-xs{:alt => "", :src => current_user.image}/
+                  %span.hidden-xs= current_user.name
+                  %span.glyphicon.glyphicon-user.visible-xs
+                %ul.dropdown-menu{"aria-labelledby" => "dLabel", :role => "menu"}
+                  %li.visible-xs= current_user.name
+                  %li.divider.visible-xs{:role => "presentation"}
+                  %li
+                    %a{:href => settings_path} Instellingen
+                  %li
+                    %a{:href => new_poule_path} Eigen poule maken
+                  %li
+                    %a{:href => signout_path} Uitloggen
+            - else
+              .user-menu.login.hidden-xs
+                %a{:href => login_path} Aanmelden
+              .user-menu.dropdown.visible-xs
+                %a{"data-toggle" => "dropdown", :href => "#"}
+                  %span.glyphicon.glyphicon-user.visible-xs
+                %ul.dropdown-menu{"aria-labelledby" => "dLabel", :role => "menu"}
+                  %li
+                    %a{:href => login_path} Aanmelden
+      .container.main-nav
+        %nav#menu
+          %ul
+            %li
+              %a{:class => ('active' if params[:controller] == 'teams'), :href => teams_path} Landen
+            %li
+              %a{:class => ('active' if params[:controller] == 'groups'), :href => groups_path} Groepen
+            - unless current_user
+              %li
+                %a{:class => ('active' if params[:controller] == 'matches'), :href => matches_path} Wedstrijden
+            %li
+              %a{:class => ('active' if params[:controller] == 'venues'), :href => venues_path} Stadions
+            %li
+              %a{:class => ('active' if params[:controller] == 'stats'), :href => stats_path} Stats
+            %li
+              %a{:class => ('active' if params[:controller] == 'rankings' || params[:controller] == 'poules'), :href => rankings_path} Poules
+            - if current_user
+              %li
+                %a{:class => ('active' if params[:controller] == 'predictions'), :href => predictions_path}
+                  Mijn voorspellingen
+                  - if current_user.unpredicted_known_matches > 0
+                    %span.badge= current_user.unpredicted_known_matches
+            %li
+              %a{:class => ('active' if params[:controller] == 'home' && params[:action] == 'help'), :href => help_path} Help
+    %main.page
+      %header.container
+        - if current_user
+          - unpredicted = current_user.unpredicted_known_matches
+          - now = DateTime.now.in_time_zone("Amsterdam")
+          - firstachtstefinaleknown = DateTime.new(2014, 6, 23, 20, 0, 0).in_time_zone("Amsterdam")
+          - lastachtstefinalestart  = DateTime.new(2014, 7,  1, 20, 0, 0).in_time_zone("Amsterdam")
+          - firstkwartfinaleknown   = DateTime.new(2014, 6, 28, 22, 0, 0).in_time_zone("Amsterdam")
+          - lastkwartfinalestart    = DateTime.new(2014, 7,  5, 20, 0, 0).in_time_zone("Amsterdam")
+          - firsthalvefinaleknown   = DateTime.new(2014, 7,  4, 22, 0, 0).in_time_zone("Amsterdam")
+          - lasthalvefinalestart    = DateTime.new(2014, 7,  8, 20, 0, 0).in_time_zone("Amsterdam")
+          - finalknown              = DateTime.new(2014, 7, 10,  0, 0, 0).in_time_zone("Amsterdam")
+          - if (now > firstachtstefinaleknown) && (unpredicted > 0)
+            .row
+              .col-md-12
+                .alert.alert-info.prediction-info-alert
+                  %span.glyphicon.glyphicon-info-sign
+                  %p
+                    %strong Let op:
+                    - if now > finalknown
+                      - if unpredicted > 1
+                        De wedstrijd om de
+                        %a{:href => "#{predictions_path}#derdeplaats"} 3e plaats
+                        en de
+                        %a{:href => "#{predictions_path}#finale"} finale
+                        zijn
+                      - else
+                        De
+                        %a{:href => "#{predictions_path}#finale"} finale
+                        is
+                    - else
+                      Er #{unpredicted > 1 ? "zijn" : "is een"} nieuwe
+                      - if now > firstachtstefinaleknown && now < lastachtstefinalestart
+                        %a{:href => "#{predictions_path}#achtstefinales"}
+                          wedstrijd#{"en" if unpredicted > 1}
+                      - elsif now > firstkwartfinaleknown && now < lastkwartfinalestart
+                        %a{:href => "#{predictions_path}#kwartfinales"}
+                          wedstrijd#{"en" if unpredicted > 1}
+                      - elsif now > firsthalvefinaleknown && now < lasthalvefinalestart
+                        %a{:href => "#{predictions_path}#halvefinales"}
+                          wedstrijd#{"en" if unpredicted > 1}
+                    bekend, vergeet deze dus niet te voorspellen!
+        .pageheader= yield :title
+      .container
+        .row
+          .col-xs-12
+            %section.content-container= yield
+    %footer
+      %span
+        = DateTime.now.strftime('%Y')
+        \- Goedvoorspellen.nl
+      %br/
+      %span.related
+        Ook leuk:
+        %a{:href => "http://www.geensnor.nl", :target => "_blank"} Geensnor.nl
+        |
+        %a{:href => "http://www.bitcoinsvergelijken.nl", :target => "_blank"} Bitcoinsvergelijken.nl
+    - if Rails.env.production?
+      :javascript
+        ga('send', 'pageview');
+    / <haml_loud> DateTime.now.in_time_zone("Amsterdam") </haml_loud>
+    /[if lt IE 9]
+      <p class="browsehappy">Je gebruikt een <strong>sterk verouderde</strong> browser. <a href="http://browsehappy.com/">Upgrade je browser</a> om optimaal gebruik te maken van deze website.</p>

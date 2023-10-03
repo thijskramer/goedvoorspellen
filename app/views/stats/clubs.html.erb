@@ -1,0 +1,36 @@
+<% content_for :browsertitle do %>
+Hofleveranciers
+<% end %>
+<% content_for :title do %>
+    <a href="<%= stats_path %>">Stats</a>
+    <span class="separator">&rsaquo;</span>
+    Hofleveranciers
+<% end %>
+<% content_for :metatags do %>
+    <meta property="og:title" content="Hofleveranciers van het WK 2014" />
+    <meta property="og:description" content="Hofleveranciers van het WK 2014 in Brazilië." />
+<% end %>
+
+<div class="stats">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="rankingtable clickable">
+                <table class="keyvalue clubrankingtable">
+                    <% lastamount = 0 %>
+                    <% @clubs.each_with_index do |c, i| %>
+                    <tr>
+                        <td class="rank"><% if lastamount != c.wkplayers.count %><%= i+1 %>.<% end %></td>
+                        <td class="name"><a href="<%= club_path(c) %>"><%= flag(c.country.isoAlpha2Code) %><%= c.name %></a></td>
+                        <td class="points"><span class="amount"><%= c.wkplayers.count %></span><span class="pointslabel">spelers</span></td>
+                    </tr>
+                    <% lastamount = c.wkplayers.count %>
+                    <% end %>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="playerslist">
+            </div>
+        </div>
+    </div>
+</div>
