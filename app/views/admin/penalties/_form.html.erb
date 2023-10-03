@@ -1,0 +1,11 @@
+<%= form_for([:admin, @penalty], :html => {:class => "form-horizontal"}) do |f| %>
+<%= f.hidden_field :match_id %>
+    <%= f.collection_select :player_id, @players, :id, :name_and_number, {}, :class => 'form-control' %>
+    <br>
+    <label class="checkbox-inline">
+        <%= f.check_box :misses %> Gemist
+      </label>
+      <div class="pull-right">
+      <%= f.submit :class => 'btn btn-primary', :value => 'Ok' %> <A href="#" class="cancel">Annuleren</a>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  matchtype_id: 1
+  hometeam_id: 1
+  awayteam_id: 1
+  homePlaceholder: MyString
+  awayPlaceholder: MyString
+  homeScore: 1
+  awayScore: 1
+  stadium_id: 1
+  referee_id: 1
+  startDate: 2013-11-28
+  startDateUtcOffset: 1
+
+two:
+  number: 1
+  matchtype_id: 1
+  hometeam_id: 1
+  awayteam_id: 1
+  homePlaceholder: MyString
+  awayPlaceholder: MyString
+  homeScore: 1
+  awayScore: 1
+  stadium_id: 1
+  referee_id: 1
+  startDate: 2013-11-28
+  startDateUtcOffset: 1

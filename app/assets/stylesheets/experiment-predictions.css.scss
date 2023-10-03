@@ -1,0 +1,175 @@
+// Place all the styles related to the Predictions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'variables';
+@import '../bourbon/bourbon';
+.prediction {
+    .prediction-arrow-title {
+        position: relative;
+        h3 {
+            position: absolute;
+            padding-right: 32px;
+            left: -164px;
+            top: -30px;
+            span {
+                font-size: 20px;
+                position: absolute;
+                right: 6px;
+                top: 5px;
+                color: #fff;
+            }
+        }
+    }
+    .match-card {
+        padding-top: 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid #ccc;
+        > section {
+            height: 50px;
+        }
+        &:hover {
+            // border-bottom: 0;
+            margin-bottom: 0px;
+        }
+       .matchdatetime {
+            background: none;
+            color: #333;
+            padding-left: 3px;
+       }
+       .scores {
+            position: absolute;
+            right: 0;
+            .score {
+                display: inline-block;
+                position: relative;
+                left: auto;
+                top: auto;
+                right: auto;
+            }
+       }
+        .opponents {
+            .home, .away {
+                .team {
+                    font-size: 19px;
+                    .flag {
+                        right: auto;
+                        left: 0;
+                    }
+                }
+            }
+            .home {
+                .team {
+                    padding-right: 36px;
+                }
+            }
+        }
+    }
+    .fields {
+        padding-top: 0px;
+        display: inline-block;
+        width: 80px;
+        input {
+            font-family: $headfont;
+            text-transform: uppercase;
+            width: 34px;
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            border: 0;
+            font-weight: 700;
+            height: 44px;
+            border-radius: 3px 3px 0 0;
+            background-color: #fff;
+            padding-top: 3px;
+            border-bottom: 3px solid #999;
+            @include transition(all 0.2s ease-in-out);
+            &:focus {
+                background: #fff;
+                outline: 0;
+                border-bottom-color: $green;
+            }
+            &.has-error {
+                color: #f00;
+                border-bottom-color: #f00;
+                &:focus {
+                    border-bottom-color: #f00;
+                }
+            }
+
+            &::-webkit-input-placeholder { line-height: 52px; }
+
+        }
+        span.sep {
+            height: 26px;
+            width: 12px;
+            font-family: $headfont;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 28px;
+            line-height: 9px;
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 18px;
+            margin-left: -2px;
+            color: #fff;
+            width: 1px;
+            visibility: hidden;
+        }
+        .field.readonly {
+            font-family: $headfont;
+            text-transform: uppercase;
+            width: 34px;
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            border: 0;
+            font-weight: 700;
+            height: 44px;
+            border-radius: 3px;
+            background: #fff;
+            padding-top: 3px;
+            display: inline-block;
+        }
+    }
+    .icon {
+        display: inline-block;
+        .check {
+            @include transition(all 0.4s ease-in-out);
+            opacity: 0;
+            font-family: $headfont;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;    
+            span {
+                color: $green;
+                font-size: 22px;
+            }
+        }
+    }
+    .predictionscore {
+        display: inline-block;
+        background: rgba(0, 0, 0, 0.65);
+        color: #fff;
+        font-family: $headfont;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: top;
+        margin-top: 0px;
+        padding-left: 7px;
+        padding-right: 10px;
+        border-radius: 4px;
+        margin-left: 20px;
+        .points {
+            font-size: 29px;
+            line-height: 24px;
+            padding-top: 3px;
+        }
+        .lbl {
+            font-size: 12px;
+            padding-bottom: 0px;
+        }
+    }
+}

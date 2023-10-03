@@ -1,0 +1,129 @@
+<% content_for :browsertitle do %>
+Stand
+<% end %>
+<% content_for :title do %>
+  Poules
+<% end %>
+<% if notice %>
+<div class="alert alert-info" id="notice"><span class="glyphicon glyphicon-ok check"></span><%= notice %></div>
+<% end %>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Pouleklassement</h2>
+        <% if @pouleranking.count == 0 %>
+        <div class="rankingblock">
+            <p>Er zijn nog geen poules!</p>
+            <% if current_user %>
+                <a href="<%= new_poule_path %>" class="btn btn-primary">Poule aanmaken
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            <% end %>
+        </div>
+        <% else %>
+            <% if current_user %>
+                <% if current_user.poule_ids.length == 0 %>
+                    <div class="rankingblock">
+                        <p>
+                    Hoi, <strong><%= current_user.name %></strong>! <br />Je kunt meedoen aan een van onderstaande poules (<em>klik dan hieronder op de poule waaraan je wilt meedoen</em>) of <a href="<%= new_poule_path %>">maak een eigen poule aan!</a>.</p>
+                </div>
+                <% end %>
+            <% end %>
+            <div class="rankingtable clickable">
+                <table class="keyvalue">
+                    <% prevpoints = 0 %>
+                    <% @pouleranking.each_with_index do |poule, index| %>
+                        <tr class="<%= "self" if current_user && poule.is_participating(current_user.id) %>">
+                            <td class="rank">
+                               <% if prevpoints != poule.points %>
+                                    <%= index + 1 %>.
+                                    <% prevpoints = poule.points %>
+                                <% end %>
+                            </td>
+                            <td class="name">
+                                <a href="<%= poule_path(poule) %>">
+                                <%= poule.name %>
+                                </a>
+                            </td>
+                            <td class="points">
+                                <span class="amount"><%= number_to_human(poule.points, precision: 1, seperator: ",", significant: false, strip_insignificant_zeros: true) %></span>
+                                <span class="pointslabel"><%= poule.points == 1 ? "punt" : "punten" %></span>
+                            </td>
+                        </tr>
+                    <% end %>
+                </table>
+                
+                <script>
+                    $('.clickable tr').on('click', function (e) {
+                        $(this).find('a').click();
+                    }).on('click', 'a', function (ev) {
+                        ev.stopPropagation();
+                        window.location.href = $(this).attr('href');
+                    });
+                </script>
+                
+            </div>
+        <% end %>
+    </div>
+    <div class="col-md-6">
+        <h2>Algemeen klassement</h2>
+        <div class="rankingtable">
+            <table class="keyvalue">
+                <% prevpoints = 0 %>
+                <% @userranking.each_with_index do |user, index| %>
+                    <tr class="<%= "self"  if current_user && user.id == current_user.id %>">
+                        <td class="rank">
+                            <% if index == 0 %>
+                                <span class="toprank first">
+                                    <span class="trophy">
+                                        <img src="/images/trophy-gold.png">
+                                        <span class="number">1</span>
+                                    </span>
+                                </span>
+                            <% elsif index == 1 %>
+                                <span class="toprank second">
+                                    <span class="trophy">
+                                        <img src="/images/trophy-silver.png">
+                                        <span class="number">2</span>
+                                    </span>
+                                </span>
+                            <% elsif index == 2 %>
+                                <span class="toprank third">
+                                    <span class="trophy">
+                                        <img src="/images/trophy-bronze.png">
+                                        <span class="number">3</span>
+                                    </span>
+
+                                </span>
+                            <% else %>
+                                <% if prevpoints != user.points %>
+                                    <%= index + 1 %>.
+                                    <% prevpoints = user.points %>
+                                <% end %>
+                            <% end %>
+                        </td>
+                        
+                        <td class="avatar">
+                            <% if (user.avatar_visibility == "PUBLIC") || (user.avatar_visibility == "USERS" && current_user) || (current_user && user.id == current_user.id) || (user.avatar_visibility == "POULE" && current_user && user.is_in_same_poule(current_user.poule_ids)) %>
+                                    <div class="image">
+                                        <img src="<%= user.image %>" alt="">
+                                    </div>
+                            <% end %>
+                        </td>
+                        
+                        <td class="name">
+                            <% if current_user %>
+                                <%= user.displayname %>
+                            <% else %>
+                                <%= user.publicname %>
+                            <% end %>
+                        </td>
+                        <td class="points">
+                            <span class="amount"><%= user.points %></span>
+                            <span class="pointslabel"><%= user.points == 1 ? "punt" : "punten" %></span>
+                        </td>
+                    </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+</div>

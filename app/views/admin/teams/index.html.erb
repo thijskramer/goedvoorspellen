@@ -1,0 +1,39 @@
+<h1>Listing teams</h1>
+
+</p>
+
+<%= link_to 'New Team', new_admin_team_path, :class => 'btn btn-success pull-right' %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+      <th>Country</th>
+      <th>FIFA Ranking</th>
+      <th>Last update</th>
+      <th>Selectie</th>
+      <th>Nummers</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @teams.order(:FIFAranking).each_with_index do |team, index| %>
+      <tr>
+        <td><%= index + 1 %>. </td>
+        <td><%= flag(team.country.isoAlpha2Code) %><%= link_to team.country.dutchName, admin_team_path(team) %>
+          (<%= team.players.count %>)
+        </td>
+        <td><%= team.FIFAranking %></td>
+        <td><%= team.updated_at.strftime('%d %B %Y %H:%M') %></td>
+        <td class="<%= 'success' if team.selection_type == 'DEFINITIEF' %>"><% if team.selection_type == 'DEFINITIEF' %><span class="glyphicon glyphicon-ok green"></span><% end %><%= team.selection_type.downcase unless team.selection_type.nil? %></td>
+        <% numbercount = team.players.where('number IS NOT NULL').count %>
+        <td class="<%= 'success' if numbercount == team.players.count %>"><% if numbercount == team.players.count %><span class="glyphicon glyphicon-ok green"></span><% end %><%= numbercount %> / <%= team.players.count %></td>
+        <td><%= link_to 'Edit', edit_admin_team_path(team), :class => "btn btn-primary btn-sm" %></td>
+        <td><%= link_to 'Delete', admin_team_path(team), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

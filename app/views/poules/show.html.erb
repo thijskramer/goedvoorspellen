@@ -1,0 +1,141 @@
+<% content_for :browsertitle do %>
+Stand in <%= @poule.name %>
+<% end %>
+<% content_for :title do %>
+    <a href="<%= rankings_path %>">Poules</a>
+    <span class="separator">&rsaquo;</span>
+    <%= @poule.name %>
+<% end %>
+<% content_for :metatags do %>
+    <meta property="og:title" content="Stand in de poule '<%= @poule.name %>'" />
+    <% firstuser = @poule.ordered_users.first %>
+    <meta property="og:description" content="<%= firstuser.publicname %> staat momenteel bovenaan in de poule '<%= @poule.name %>'!" />
+<% end %>
+<% if notice %>
+<div class="alert alert-info" id="notice"><span class="glyphicon glyphicon-ok check"></span><%= notice %></div>
+<% end %>
+<div class="row">
+    <div class="col-md-12">
+        <h2>Stand</h2>
+    </div>
+    <div class="col-md-6">
+        <div class="rankingtable">
+            <table class="keyvalue">
+                <% prevpoints = 0 %>
+                <% @poule.ordered_users.each_with_index do |user, index| %>
+                    <tr class="<%= "self"  if current_user && user.id == current_user.id %>">
+                        <td class="rank">
+                            <% if index == 0 %>
+                                <span class="toprank first">
+                                    <span class="trophy">
+                                        <img src="/images/trophy-gold.png">
+                                        <span class="number">1</span>
+                                    </span>
+                                </span>
+                            <% elsif index == 1 %>
+                                <span class="toprank second">
+                                    <span class="trophy">
+                                        <img src="/images/trophy-silver.png">
+                                        <span class="number">2</span>
+                                    </span>
+                                </span>
+                            <% elsif index == 2 %>
+                                <span class="toprank third">
+                                    <span class="trophy">
+                                        <img src="/images/trophy-bronze.png">
+                                        <span class="number">3</span>
+                                    </span>
+
+                                </span>
+                            <% else %>
+                                <% if prevpoints != user.points %>
+                                    <%= index + 1 %>.
+                                    <% prevpoints = user.points %>
+                                <% end %>
+                            <% end %>
+                        </td>
+                        <td class="avatar">
+                             <% if (user.avatar_visibility == "PUBLIC") || (user.avatar_visibility == "USERS" && current_user) || (current_user && user.id == current_user.id) || (user.avatar_visibility == "POULE" && current_user && user.is_in_same_poule(current_user.poule_ids)) %>
+                                    <div class="image">
+                                        <img src="<%= user.image %>" alt="">
+                                    </div>
+                            <% end %>
+                        </td>
+                        <td class="name">
+                            <% if current_user %>
+                                <%= user.displayname %>
+                            <% else %>
+                                <%= user.publicname %>
+                            <% end %>
+                        </td>
+                        <td class="points">
+                            <span class="amount"><%= user.points %></span>
+                            <span class="pointslabel"><%= user.points == 1 ? "punt" : "punten" %></span>
+                        </td>
+                    </tr>
+                <% end %>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="rankingblock">
+            <% if @poule.publicly_visible || (current_user && current_user.poules.exists?(@poule.id)) %>
+                <%= raw(markdown(@poule.description)) %>
+            <% end %>
+        </div>
+        <% if current_user %>
+            <div class="rankingblock poulesettings">
+                <div>
+                    <% if current_user.id == @poule.admin_id %>
+                        <a href="<%= edit_poule_path(@poule) %>" class="btn btn-primary"><span class="glyphicon glyphicon-cog"></span> Wijzig instellingen </a> 
+                        
+                    <% else %>
+                        
+                        <% if current_user.poules.exists?(@poule.id) %>
+                            <a href="<%= poule_path(@poule) %>/leave" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Niet meer deelnemen aan deze poule</a>
+                        <% else %>
+                            <% if @poule.is_protected %>
+                                <div class="participate-form">
+                                    <% haserrors = flash[:wrongpass] != nil %>
+                                    <div class="button" style="<%= "display: none;" if haserrors %>">
+                                        <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Deelnemen aan deze poule</a>
+                                    </div>
+                                    <div class="form" style="<%= "display: none;" unless haserrors %>">
+                                        <%= form_tag(poule_path(@poule) + '/join', method: :post) %>
+                                            <div class="form-group <%= 'has-error' if haserrors %>">
+                                                <%= label_tag "password", "Wachtwoord:" %>
+                                                <%= password_field_tag 'password', nil, class: 'form-control' %>
+                                                <% if haserrors %>
+                                                <span class="help-block">Het opgegeven wachtwoord is onjuist</span> <% end %>
+                                            </div>
+                                            <div class="form-group">
+                                                <%= submit_tag "Ok", class: 'btn btn-primary' %>
+                                                <a href="#" class="btn btn-link cancel">Annuleren</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <script>
+                                    $('.button a.btn').on('click', function (e) {
+                                        e.preventDefault();
+                                        $(this).closest('.button').slideUp(250);
+                                        $(this).closest('.button').next('.form').slideDown(250);
+                                    });
+                                    $('.form a.cancel').on('click', function (e) {
+                                        e.preventDefault();
+                                        $(this).closest('.form').slideUp(250);
+                                        $(this).closest('.form').prev('.button').slideDown(250);
+                                    })
+                                </script>
+                            <% else %>
+                                <%= form_tag(poule_path(@poule) + '/join', method: :post) %>
+                                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Deelnemen aan deze poule</button>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
+

@@ -1,0 +1,121 @@
+<% if notice %>
+<div class="alert alert-info">
+<p id="notice"><%= notice %></p>
+</div>
+<% end %>
+<h1><%= @team.country_id == nil ? "" : @team.country.dutchName %></h1>
+<%= form_for(@team, url: admin_team_path, ) do |f| %>
+<table class="table table-striped">
+  <tr>
+    <td>FIFA Ranking:</td>
+    <td><%= f.text_field :FIFAranking, :class => 'form-control' %></td>
+  </tr>
+  <tr>
+    <td>Association:</td>
+    <td><%= @team.associationAbbreviation %> (<%= @team.associationFull %>)</td>
+  </tr>
+  <tr>
+    <td>Coach:</td>
+    <td><%= @team.coach_id == nil ? "" : @team.coach.fullname %></td>
+  </tr>
+  <tr>
+    <td>Selectie:</td>
+    <td>
+        
+        <%= f.select :selection_type, selection_type_options, { include_blank: true }, :class => 'form-control' %>        
+    </td>
+  </tr>
+  <tr>
+    <td>Laatste update:</td>
+    <td><%= @team.updated_at.strftime('%d %B %Y %H:%M') %></td>
+</tr>
+</table>
+<p>
+    <%= f.submit "ok" %>
+</p>
+<% end %>
+
+<p>
+<%= link_to 'Edit', edit_admin_team_path(@team), :class => "btn btn-primary" %>
+<%= link_to 'Back', admin_teams_path, :class => "btn btn-link" %>
+</p>
+
+<h2>Spelers (<%= @players.count %>)</h2>
+<%= link_to 'Add player', new_admin_player_path(:team_id => @team.id), :class => 'btn btn-success pull-right', data: {toggle: 'modal', target: '#player-modal'} %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= link_to "No.", admin_team_path(@team, sort: "number") %></th>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th><%= link_to "Pos.", admin_team_path(@team) %></th>
+      <th>Club</th>
+      
+      <th><abbr title="Captain">C.</abbr></th>
+      <th><abbr title="Vice captain">VC.</abbr></th>
+      <th>Caps</th>
+      <th>Goals</th>
+      <th><abbr title="Date of birth">Dob</abbr></th>
+      <th>Insquad</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @players.each do |player| %>
+      <tr class="<%= 'notinsquad' if !player.inSquad %>">
+        <td><span class="number"><%= player.number %></span></td>
+        <td><%= player.firstName %></td>
+        <td><%= player.lastName %></td>
+        <td><%= player.position %></td>
+        <td>
+          <% if(player.club_id != nil) %>
+          <%= flag(player.club.country.isoAlpha2Code) %>
+          <%= player.club.name %>
+          <% end %>
+        </td>
+        
+        <td><%= bool_icon(player.isCaptain) %></td>
+        <td><%= bool_icon(player.isViceCaptain) %></td>
+        <td><%= player.caps %></td>
+        <td><%= player.goals %></td>
+        <td><nobr><%= player.dateOfBirth.strftime('%d-%m-%Y') %></nobr></td>
+        <td class="squad-toggle"><%= link_to bool_icon(player.inSquad), admin_player_path(player) %></td>
+        <td class="edit-player"><%= link_to 'Edit', edit_admin_player_path(player), data: {toggle: 'modal', target: '#player-modal'} %></td>
+        <td><%= link_to 'Destroy', admin_player_path(player), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="modal fade" id="player-modal"></div>
+<script>
+  $('.squad-toggle a').on('click', function (e) {
+    var a = $(this);
+    var href = $(a).attr('href');
+    var inSquad = $('span', a).hasClass('glyphicon-ok');
+    $.post(href + '/select', {inSquad:!inSquad}, function(response) {
+      if(inSquad) {
+        $('span', a).removeClass('glyphicon-ok green').addClass('glyphicon-remove red');
+        $(a).parents('tr').addClass('notinsquad');
+      }
+      else {
+        $('span', a).addClass('glyphicon-ok green').removeClass('glyphicon-remove red');
+        $(a).parents('tr').removeClass('notinsquad');
+      }
+    }, "json");
+    e.preventDefault();
+  });
+
+  // $('td.edit-player a').on('click', function (e) {
+  //   var href = $(this).attr('href');
+  //   $('player-modal').modal(options)
+  //   $.get(href, function (response) {
+  //       console.log(response);
+  //   });
+  //   e.preventDefault();
+  // });
+  
+
+</script>
+

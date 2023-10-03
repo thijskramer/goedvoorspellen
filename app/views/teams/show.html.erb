@@ -1,0 +1,149 @@
+<% content_for :browsertitle do %>
+<%= @team.name %>
+<% end %>
+<% content_for :title do %>
+    <a href="<%= football_teams_path %>">Landen</a>
+    <span class="separator">&rsaquo;</span>
+    <%= @team.name %>
+<% end %>
+<% content_for :metatags do %>
+<meta property="og:title" content="<%= @team.name %>" />
+<meta property="og:description" content="Alle gegevens, wedstrijden, de selectie en de stand in de poule van <%= @team.name %> op het WK 2014 in Brazilië." />
+<!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<% content_for :img do %>/images/spain2.jpg<% end %>
+<div class="detailspage team <%= @team.country.isoAlpha2Code.downcase %>">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="block teaminfo">
+        <div class="row">
+          <div class="col-md-8">
+            <table class="teaminfo keyvalue">
+              <tr>
+                <td class="key">FIFA ranking: </td>
+                <td><%= @team.FIFAranking %> (nov. 2013)</td>
+              </tr>
+              <tr>
+                <td class="key">Nationale voetbalbond:</td>
+                <td><abbr title="<%= @team.associationFull %>"><%= @team.associationAbbreviation %></abbr></td>
+              </tr>
+              <tr>
+                <td class="key">Aantal WK deelnames:</td>
+                <td><%= @team.appearances %></td>
+              </tr>
+              <tr>
+                <td class="key">Beste WK resultaat:</td>
+                <td><%= @team.best_result %></td>
+              </tr>
+              <tr>
+                <td class="key">Bondscoach:</td>
+                <td><%= flag(@team.coach.country.isoAlpha2Code) %><%= @team.coach.fullname %></td>
+              </tr>
+              <tr>
+                <td class="key">Gemiddelde leeftijd:</td>
+                <td><%= number_with_precision(@team.average_age, :precision => 1, :delimiter => ',') %> jaar</td>
+              </tr>
+              <tr>
+                <td class="key">Aanvoerder:</td>
+                <td><% unless @team.captain.nil? %><%= @team.captain.name %> (<%= @team.captain.age %> jaar, <%= @team.captain.computed_caps %> interlands)<% else %>Nog niet bekend<% end %></td>
+              </tr>
+              <tr>
+                <td class="key">Meest ervaren speler:</td>
+                <% most_experienced = @team.players.sort {|x, y| x.computed_caps <=> y.computed_caps }.last %>
+                <td><%= most_experienced.name %> (<%= most_experienced.computed_caps %> interlands)</td>
+              </tr>
+              <tr>
+                <td class="key">Topscorer van selectie:</td>
+                <% topscorer = @team.players.sort{ |x, y| x.computed_goals <=> y.computed_goals}.last %>
+                <td><%= topscorer.name %> (<%= topscorer.computed_goals %> doelpunten)</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-4">
+            <div class="logo">
+              <%= image_tag @team.logo(:medium) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <h2>Wedstrijden</h2>
+        <% @team.matches.sort { |m1,m2| m1.startDate <=> m2.startDate }.each do |m| %>
+            <%= render 'shared/match', :match => m, :show_group => true, :show_stage => true %>
+        <% end %>
+      </div>
+      <div class="block">
+        <h2>Stand</h2>
+        <%= render 'shared/group', :group => @team.group, :title => true %>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <aside>
+        <% unless @lastmatch == nil %>
+        <div class="block nextgame">
+          <h3>Laatste wedstrijd</h3>
+          <%= render 'shared/lastmatch', :match => @lastmatch %>
+        </div>
+        <% end %>
+        <% unless @nextmatch == nil %>
+        <div class="block nextgame">
+          <h3>Volgende wedstrijd</h3>
+          <%= render 'shared/nextmatch', :match => @nextmatch %>
+          <h3>Begint over</h3>
+          <%= render 'shared/matchcountdown', :match => @nextmatch %>
+        </div>
+        <% end %>
+        
+        <div class="block suppliers">
+          <h3>Aantal spelers per club</h3>
+          <section>
+              <table>
+                    <tbody>
+                    <% 
+                    numWithOne = 0
+                    @suppliers.each(:as => :hash) do |s| %>
+                        <% if s["players"] == 1
+                            numWithOne += 1
+                        else %>
+                            <tr>
+                                <td class="name">
+                                    <%= flag(s["isoAlpha2Code"]) %><%= s["name"] %>
+                                </td>
+                                <td class="players"><%= s["players"] %> speler<%= "s" unless s["players"] == 1 %></td>
+                            </tr>
+                        <% end %>
+                        <% end %>
+                        <% if numWithOne > 1 %>
+                            <tr>
+                                <td colspan="2" class="name"><%= numWithOne %> clubs met 1 speler<td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+      </aside>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-md-12">
+    <% if @team.selection_type != nil && @team.selection_type == 'VOORLOPIG' %>
+        <h2>Voorlopige selectie</h2>
+    <% elsif @team.selection_type != nil && @team.selection_type == 'DEFINITIEF' %>
+        <h2>Definitieve selectie</h2>
+    <% else %>
+        <h2>Spelers</h2>
+    <% end %>
+    
+    <%= render 'playerlist', :team => @team %>
+
+
+
+
+
+
+
+
+
+  </div>
+</div>

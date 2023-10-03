@@ -1,0 +1,54 @@
+<% content_for :browsertitle do %>
+Mijn voorspellingen
+<% end %>
+<% content_for :title do %>
+    Mijn voorspellingen
+<% end %>
+
+<div class="detailspage prediction">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-9">
+            <div class="prediction-arrow-title">
+                <h3><span class="glyphicon glyphicon-arrow-down"></span>Voorspelling</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <% laststage = 1 %>
+            <% unpredicted = current_user.unpredicted_known_matches %>
+            <% @predictions.each do |prediction| %>
+                <% if laststage != prediction.match.matchtype_id %>
+                    <% if prediction.match.matchtype_id == 2 %>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="alert alert-info prediction-info-alert">
+                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                    <p>
+                                        <strong>Let op:</strong> 
+                                        Vanaf hier begint de knockout-fase. Je voorspelling geldt daarom <em>inclusief</em> een eventuele verlenging, maar <em>exclusief</em> eventuele strafschoppen.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 id="achtstefinales">Achtste finales</h3>
+                    <% end %>
+                    <% if prediction.match.matchtype_id == 3 %>
+                        <h3 id="kwartfinales">Kwartfinales</h3>
+                    <% end %>
+                    <% if prediction.match.matchtype_id == 4 %>
+                        <h3 id="halvefinales">Halve finales</h3>
+                    <% end %>
+                    <% if prediction.match.matchtype_id == 5 %>
+                        <h3 id="derdeplaats">3e / 4e plaats</h3>
+                    <% end %>
+                    <% if prediction.match.matchtype_id == 6 %>
+                        <h3 id="finale">Finale</h3>
+                    <% end %>
+                <% end %>
+                <%= render 'shared/prediction', :pred => prediction %>
+                <% laststage = prediction.match.matchtype_id %>
+            <% end %>
+        </div>
+    </div>
+</div>

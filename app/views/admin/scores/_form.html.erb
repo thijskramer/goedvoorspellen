@@ -1,0 +1,19 @@
+<%= form_for([:admin, @score], :html => {:class => "form-horizontal"}) do |f| %>
+<%= f.hidden_field :match_id %>
+    <%= f.collection_select :player_id, @players, :id, :name_and_number, {}, :class => 'form-control' %>
+  
+    In de
+    <%= f.number_field :minute, :class => 'form-control', :maxlength => 3, :required => true %>
+ +
+    <%= f.number_field :plus_extra_time, :class => 'form-control', :maxlength => 2 %>e minuut
+    <br>
+    <label class="checkbox-inline">
+        <%= f.check_box :is_penalty %> Penalty
+      </label>
+      <label class="checkbox-inline">
+        <%= f.check_box :is_own_goal %> Eigen doelpunt
+      </label>
+      <div class="pull-right">
+      <%= f.submit :class => 'btn btn-primary', :value => 'Ok' %> <A href="#" class="cancel">Annuleren</a>
+  </div>
+<% end %>

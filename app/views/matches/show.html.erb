@@ -1,0 +1,431 @@
+<% content_for :browsertitle do %>
+<%= @match.name %>
+<% end %>
+<% content_for :title do %>
+    <a href="<%= matches_path %>">Wedstrijden</a>
+    <span class="separator">&rsaquo;</span>
+    <%= @match.name %>
+<% end %>
+<%  mtitle = ""
+    if @match.hometeam_id.nil? 
+        mtitle += @match.homePlaceholder
+    else 
+        mtitle += @match.hometeam.name
+    end
+    mtitle += " - "
+    if @match.awayteam_id.nil?
+        mtitle += @match.awayPlaceholder
+    else 
+        mtitle += @match.awayteam.name
+    end
+    stage = ""
+     if @match.matchtype_id == 1
+        stage = "Groep " + @match.group
+     elsif @match.matchtype_id == 2
+        stage = "Achtste finale"
+     elsif @match.matchtype_id == 3
+        stage = "Kwartfinale"
+     elsif @match.matchtype_id == 4
+        stage = "Halve finale"
+     elsif @match.matchtype_id == 5
+        stage = "Wedstrijd om de 3e plaats"
+     else
+        stage = "Finale"
+     end
+%>
+<% content_for :metatags do %>
+    <meta property="og:title" content="<%= stage + ': ' + mtitle %>" />
+    <meta property="og:description" content="Bekijk hier de opstellingen, wissels, doelpuntenmakers en gele en rode kaarten van de wedstrijd <%= mtitle %> in <%= stage %> op het WK 2014 in Brazilië in een gemakkelijk overzicht." />
+    <!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="matchdetails">
+      <div class="matchheader">
+        <div class="stage">
+            <%= stage %>
+        </div>
+        <div class="date">
+          <%= @match.startDate.strftime('%d') %>
+          <%= (I18n.t @match.startDate.strftime('%B')).downcase %>
+          <%= @match.startDate.strftime('%Y') %>
+          - 
+          <%= @match.startDate.strftime('%H:%M') %> uur
+        </div>
+        <div class="stadium">
+          <a href="<%= venue_path(@match.stadium) %>"><%= @match.stadium.name %></a>, <%= @match.stadium.city %>
+        </div>
+        <% unless @match.referee.nil? %>
+        <div class="referee">
+          <strong>Scheidsrechter:</strong> <%= flag(@match.referee.country.isoAlpha2Code) %><%= @match.referee.name %>
+        </div>
+        <% end %>
+      </div>
+      <div class="matchdata">
+        <!-- <div class="table-responsive"> -->
+          <table>
+            <thead>
+              <tr class="visible-xs">
+                <th colspan="3">
+                    <table>
+                        <tr>
+                            <th class="home">
+                                <% if @match.hometeam_id != nil %>
+                                    <%= flag(@match.hometeam.country.isoAlpha2Code, 48) %><a href="<%= team_path(@match.hometeam) %>"><%= @match.hometeam.name %></a>
+                                    <% if @match.penalties.count > 0 && (@match.homepenalties_scored > @match.awaypenalties_scored) %>
+                                        <span class="wns">(w.n.s.)</span>
+                                    <% end %> 
+                                <% else %>
+                                    <%= @match.homePlaceholder %>
+                                <% end %>
+                            </th>
+                            <th class="result">
+                              <% unless @match.homeScore.nil? && @match.awayScore.nil? %>
+                              <span class="score"><%= @match.homeScore %></span>
+                              <span class="score"><%= @match.awayScore %></span>
+                              <% else %>
+                                -
+                              <% end %>
+                            </th>
+                            <th class="away">
+                                <% if @match.awayteam_id != nil %>
+                                    <a href="<%= team_path(@match.awayteam) %>"><%= @match.awayteam.name %></a><%= flag(@match.awayteam.country.isoAlpha2Code, 48) %>
+                                    <% if @match.penalties.count > 0 && (@match.homepenalties_scored < @match.awaypenalties_scored) %>
+                                        <span class="wns">(w.n.s.)</span>
+                                    <% end %> 
+                                <% else %>
+                                    <%= @match.awayPlaceholder %>
+                                <% end %>
+                            </th>
+                        </tr>
+                    </table>
+               </tr>
+               <tr class="hidden-xs">
+                    <th class="home">
+                        <% if @match.hometeam_id != nil %>
+                            <%= flag(@match.hometeam.country.isoAlpha2Code, 48) %><a href="<%= team_path(@match.hometeam) %>"><%= @match.hometeam.name %></a> 
+                            <% if @match.penalties.count > 0 && (@match.homepenalties_scored > @match.awaypenalties_scored) %>
+                                <span class="wns">(w.n.s.)</span>
+                            <% end %> 
+                        <% else %>
+                            <%= @match.homePlaceholder %>
+                        <% end %>
+                    </th>
+                    <th class="result">
+                      <% unless @match.homeScore.nil? && @match.awayScore.nil? %>
+                      <span class="score"><%= @match.homeScore %></span>
+                      <span class="score"><%= @match.awayScore %></span>
+                      <% else %>
+                        -
+                      <% end %>
+                    </th>
+                    <th class="away">
+                        <% if @match.awayteam_id != nil %>
+                            <a href="<%= team_path(@match.awayteam) %>"><%= @match.awayteam.name %></a><%= flag(@match.awayteam.country.isoAlpha2Code, 48) %>
+                            <% if @match.penalties.count > 0 && (@match.homepenalties_scored < @match.awaypenalties_scored) %>
+                                <span class="wns">(w.n.s.)</span>
+                            <% end %> 
+                        <% else %>
+                            <%= @match.awayPlaceholder %>
+                        <% end %>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="3" class="label visible-xs">
+                    Opstellingen
+                </td>
+              </tr>
+              <tr class="lineup">
+                <td class="home">
+                    <% if @match.homelineups.length == 0 %>
+                        Nog niet bekend.
+                    <% end %> 
+                  <ul>
+                    <% @match.homelineups.each do |l| %>
+                      <li>
+                        <% sub = @match.substitutes.where(:player_out_id => l.player_id).first %>
+                        <% unless sub.nil? %>
+                            <span class="substitution out" title="Verlaat het veld">
+                              <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                            </span>
+                        <% end %>
+                        <%= l.player.name %> <strong class="number"><%= l.player.number %></strong>
+                      </li>
+                      <% unless sub.nil? %>
+                        <li>
+                            <% subsub = @match.substitutes.where(:player_out_id => sub.player_in_id).first %>
+                          
+                            <span class="substitution in" title="Komt in het veld">
+                            <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                          </span>
+                          <% unless subsub.nil? %>
+                              <span class="substitution out" title="Verlaat het veld">
+                                <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                              </span>
+                          <% end %>
+                          <%= sub.player_in.name %> <strong class="number"><%= sub.player_in.number %></strong>
+                        </li>
+                        <% unless subsub.nil? %>
+                          <li>
+                            <span class="substitution in" title="Komt in het veld">
+                              <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                            </span>
+                            <% subsubsub = @match.substitutes.where(:player_out_id => subsub.player_in_id).first %>
+                            <% unless subsubsub.nil? %>
+                                <span class="substitution out" title="Verlaat het veld">
+                                  <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                                </span>
+                            <% end %>
+                             <%= subsub.player_in.name %> <strong class="number"><%= subsub.player_in.number %></strong>
+                            
+                          </li>
+                          <% unless subsubsub.nil? %>
+                            <li>
+                              <span class="substitution in" title="Komt in het veld">
+                                <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                              </span>
+                              <%= subsubsub.player_in.name %> <strong class="number"><%= subsubsub.player_in.number %></strong>
+                              
+                            </li>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </td>
+                <td class="label hidden-xs">
+                  Opstellingen
+                </td>
+                <td class="away">
+                    <% if @match.homelineups.length == 0 %>
+                        Nog niet bekend.
+                    <% end %> 
+                  <ul>
+                    <% @match.awaylineups.each do |l| %>
+                      <li>
+                        <% sub = @match.substitutes.where(:player_out_id => l.player_id).first %>
+                         <strong class="number"><%= l.player.number %></strong> <%= l.player.name %>
+                         <% unless sub.nil? %>
+                            <span class="substitution out" title="Verlaat het veld">
+                              <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                            </span>
+                        <% end %>
+                      </li>
+                      <% unless sub.nil? %>
+                        <li>
+                          <strong class="number"><%= sub.player_in.number %></strong> <%= sub.player_in.name %>
+                          <span class="substitution in" title="Komt in het veld">
+                            <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                          </span>
+                          <% subsub = @match.substitutes.where(:player_out_id => sub.player_in_id).first %>
+                          <% unless subsub.nil? %>
+                              <span class="substitution out" title="Verlaat het veld">
+                                <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                              </span>
+                          <% end %>
+                        </li>
+                        <% unless subsub.nil? %>
+                          <li>
+                            
+                            <strong class="number"><%= subsub.player_in.number %></strong> <%= subsub.player_in.name %>
+                            <span class="substitution in" title="Komt in het veld">
+                              <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                            </span>
+                            <% subsubsub = @match.substitutes.where(:player_out_id => subsub.player_in_id).first %>
+                            <% unless subsubsub.nil? %>
+                                <span class="substitution out" title="Verlaat het veld">
+                                  <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                                </span>
+                            <% end %>
+                          </li>
+                          <% unless subsubsub.nil? %>
+                            <li>
+                              
+                              <strong class="number"><%= subsubsub.player_in.number %></strong> <%= subsubsub.player_in.name %>
+                              <span class="substitution in" title="Komt in het veld">
+                                <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                              </span>
+                            </li>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+               <tr>
+                <td colspan="3" class="label visible-xs">
+                    Doelpunten
+                </td>
+              </tr>
+              <tr class="scores">
+                <td class="home">
+                  <ul>
+                    <% @match.homegoals.each do |g| %>
+                      <li><%= g.player.name %>
+                        <span class="goal">
+                          <%= g.minute %>'<%= '+'+g.plus_extra_time.to_s unless g.plus_extra_time.nil? %>
+                          <% if g.is_own_goal %>
+                            (e.d.)
+                          <% end %>
+                          <% if g.is_penalty %>
+                            (p.)
+                          <% end %>
+                        </span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+                <td class="label hidden-xs">
+                  Doelpunten
+                </td>
+                <td class="away">
+                  <ul>
+                    <% @match.awaygoals.each do |g| %>
+                      <li>
+                        <span class="goal">
+                          <%= g.minute %>'<%= '+'+g.plus_extra_time.to_s unless g.plus_extra_time.nil? %>
+                          <% if g.is_own_goal %>
+                            (e.d.)
+                          <% end %>
+                          <% if g.is_penalty %>
+                            (p.)
+                          <% end %>
+                        </span>
+                        <%= g.player.name %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="3" class="label visible-xs">
+                    Kaarten
+                </td>
+              </tr>
+              <tr class="bookings">
+                <td class="home">
+                  <ul>
+                    <% @match.homebookings.each do |b| %>
+                      <li><%= b.player.name %>
+                        <span class="booking <%= 'yellow' if b.is_yellow_card %> <%= 'red' if b.is_red_card %> <%= 'yellowred' if b.is_yellow_red_card %>">
+                          <%= b.minute %>'<%= '+'+b.plus_extra_time.to_s unless b.plus_extra_time.nil? %>
+                        </span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+                <td class="label hidden-xs">
+                  Kaarten
+                </td>
+                <td class="away">
+                  <ul>
+                    <% @match.awaybookings.each do |b| %>
+                      <li>
+                        <span class="booking <%= b.is_yellow_red_card ? 'yellowred' : b.is_yellow_card ? 'yellow' : 'red' %>">
+                          <%= b.minute %>'<%= '+'+b.plus_extra_time.to_s unless b.plus_extra_time.nil? %>
+                        </span>
+                        <%= b.player.name %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+              <% if @match.penalties.count > 0 %>
+              <tr>
+                <td colspan="3" class="label visible-xs">
+                    Strafschopserie
+                </td>
+              </tr>
+              <tr class="penalties">
+                <td class="home">
+                  <ul>
+                    <% @match.homepenalties.each do |p| %>
+                      <li>
+                        <%= p.player.name %>
+                        <span class="goal <%= 'misses' if p.misses %>">&#8203;</span>
+                        
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+                <td class="label hidden-xs">
+                  Strafschopserie
+                </td>
+                <td class="away">
+                  <ul>
+                    <% @match.awaypenalties.each do |p| %>
+                      <li>
+                        <span class="goal <%= 'misses' if p.misses %>">&#8203;</span>
+                        <%= p.player.name %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <!-- </div> -->
+      <% total_predictions = @match.predictions.where("home_score IS NOT NULL AND away_score IS NOT NULL").count 
+            predictions_home_won = @match.predictions.where("home_score > away_score").count
+            predictions_draw = @match.predictions.where("home_score = away_score").count
+            predictions_away_won = @match.predictions.where("home_score < away_score").count
+            home_won_percentage = (predictions_home_won.to_f / total_predictions.to_f) * 100.0
+            away_won_percentage = (predictions_away_won.to_f / total_predictions.to_f) * 100.0
+            drawn_percentage = (predictions_draw.to_f / total_predictions.to_f) * 100.0
+        %>
+      <% if total_predictions > 0 %>
+      <div class="predictions">
+        <h3>Voorspellingen</h3>
+        <table>
+            <tr>
+                <td class="label">
+                    <% if @match.hometeam_id != nil %>
+                        <%= @match.hometeam.name %>
+                    <% else %>
+                        Thuisploeg
+                    <% end %> wint:
+                </td>
+                <td class="bar">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= home_won_percentage %>" aria-valuemin="0" aria-valuemax="100" data-width="<%= home_won_percentage %>%">
+                            <span class=""><%= number_with_precision(home_won_percentage, :precision => 1, :delimiter => ',') %>%</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><% if @match.awayteam_id != nil %>
+                        <%= @match.awayteam.name %>
+                    <% else %>
+                        Uitploeg
+                    <% end %> wint:</td>
+                <td class="bar">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= away_won_percentage %>" aria-valuemin="0" aria-valuemax="100" data-width="<%= away_won_percentage %>%">
+                            <span class=""><%= number_with_precision(away_won_percentage, :precision => 1, :delimiter => ',') %>%</span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Gelijkspel:</td>
+                <td class="bar">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<%= drawn_percentage %>" aria-valuemin="0" aria-valuemax="100" data-width="<%= drawn_percentage %>%">
+                        <span class=""><%= number_with_precision(drawn_percentage, :precision => 1, :delimiter => ',') %>%</span>
+                      </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

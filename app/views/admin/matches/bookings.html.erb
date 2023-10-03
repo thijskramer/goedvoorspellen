@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'matchmenu' %>
+  </div>
+  <div class="col-md-9">
+    <div class="row scores">
+        <table class="table">
+          <thead>
+          <tr>
+            <th><%= @match.hometeam.name %></th>
+            <th><%= @match.homeScore %>-<%= @match.awayScore %></th>
+            <th><%= @match.awayteam.name %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="home">
+              <ul>
+                <% @match.homebookings.each do |b| %>
+                  <li class="booking">
+                    <span class="minute <%= 'yellow' if b.is_yellow_card %><%= 'red' if b.is_red_card %><%= 'yellowred' if b.is_yellow_red_card %>">
+                      <%= b.minute %>'<%= '+'+b.plus_extra_time.to_s unless b.plus_extra_time == nil %>
+                    </span>
+                    <span class="player">
+                      <%= b.player.name %>
+                    </span>
+                    <span class="remove">
+                      <%= link_to 'Destroy', admin_booking_path(b), method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </span>
+                  </li>
+                <% end %>
+              </ul>
+              <a href="<%= new_admin_booking_path(match_id: @match.id, team_id: @match.hometeam_id) %>" class="addbooking btn btn-primary btn-sm">Kaart toevoegen</a>
+              <div class="bookingform well well-sm" style="display: none;"></div>
+            </td>
+            <td>Kaarten</td>
+            <td class="away">
+               <ul>
+                <% @match.awaybookings.each do |b| %>
+                  <li class="booking">
+                    <span class="minute <%= 'yellow' if b.is_yellow_card %><%= 'red' if b.is_red_card %><%= 'yellowred' if b.is_yellow_red_card %>">
+                      <%= b.minute %>'<%= '+'+b.plus_extra_time.to_s unless b.plus_extra_time == nil %>
+                    </span>
+                    <span class="player">
+                      <%= b.player.name %>
+                    </span>
+                    <span class="remove">
+                      <%= link_to 'Destroy', admin_booking_path(b), method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </span>
+                  </li>
+                <% end %>
+              </ul>
+             <a href="<%= new_admin_booking_path(match_id: @match.id, team_id: @match.awayteam_id) %>" class="addbooking btn btn-primary btn-sm">Kaart toevoegen</a>
+              <div class="bookingform well well-sm" style="display: none;"></div>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {
+    $('.addbooking').on('click', function(e) {
+      var self = $(this);
+      var url = $(self).attr('href');
+
+      $.get(url, function(response) {
+        $(self).siblings('.bookingform').show().html(response);
+      });
+      e.preventDefault();
+    });
+    $('table td').on('click', 'form a.cancel', function(e) {
+      e.preventDefault();
+      $(this).parents('.well.well-sm').empty().hide();
+    });
+  });
+
+</script>

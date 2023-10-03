@@ -1,0 +1,59 @@
+<% content_for :browsertitle do %>
+Help
+<% end %>
+<% content_for :title do %>
+    Help
+<% end %>
+<div class="row home">
+    <div class="col-md-12">
+        <div class="content faq">
+            <p>
+                <strong>Wat is goedvoorspellen.nl?</strong><br />
+                Goedvoorspellen.nl is een website waar je samen met je vrienden, familie of collega's de wedstrijden van het WK 2014 kunt voorspellen. Daarnaast kan je er allerlei informatie vinden over de stadions, de teams, de wedstrijden en de spelers. 
+            </p>
+            <p>
+                <strong>Hoe kan ik meedoen?</strong><br />
+                Je kunt meedoen door bovenaan op '<a href="<%= login_path %>">aanmelden</a>' te klikken en daar te kiezen voor inloggen met Facebook, Google+ of Twitter. 
+            </p>
+            <p><strong>Ik heb geen Facebook, Google+ of Twitter!</strong><br>
+                Helaas, dan kan je niet meedoen. Maar een account bij een van deze diensten is zo gemaakt! 
+            </p>
+            <p><strong>Ik ben nu ingelogd, hoe kan ik wedstrijden voorspellen?</strong><br />
+                Je kunt alle wedstrijden voorspellen door te klikken op '<a href="<%= predictions_path %>">Mijn voorspellingen</a>', en hier in de witte hokjes achter de wedstrijden je voorspelling in te vullen.
+            </p>
+            <p><strong>Moet ik alle wedstrijden in &eacute;&eacute;n keer invullen?</strong><br>
+                Nee, je hoeft niet alle wedstrijden in &eacute;&eacute;n keer in te vullen. Je kunt je voorspelling nog invullen of wijzigen tot <strong>1 minuut</strong> voor aanvang van de wedstrijd. Dat betekent dus dat je niet pers&eacute; de 8e finales t/m de finale hoeft in te vullen zo lang deze nog niet bekend zijn.
+            <p>
+            <p><strong>Hoe werkt de puntentelling?</strong><br />
+                De puntentelling werkt als volgt: 
+            </p>
+            <table>
+                <tr>
+                    <td>Volledige uitslag goed:</td>
+                    <td><strong>10 punten</strong></td>
+                </tr>
+                <tr>
+                    <td>'Toto' (winnaar, verliezer of gelijkspel) goed:</td>
+                    <td><strong>5 punten</strong></td>
+                </tr>
+                <tr>
+                    <td>E&eacute;n van beide scores goed:</td>
+                    <td><strong>2 punten</strong></td>
+                </tr>
+            </table>
+            <p>Een voorbeeld: Je voorspelling voor Nederland - Spanje is <strong>2-1</strong>. <br />
+                Als de wedstrijd in <strong>1-1</strong> eindigt krijg je <strong>2</strong> punten, want je hebt een van de beide scores juist.<br />
+                Als de wedstrijd in <strong>3-0</strong> eindigt krijg je <strong>5</strong> punten, want je hebt alleen de winnaar ('toto') juist.<br />
+                Als de wedstrijd in <strong>3-1</strong> eindigt krijg je <strong>7</strong> punten, want je hebt zowel de toto (<strong>+5</strong>) als een van beide scores (<strong>+2</strong>) juist.<br />
+                Als de wedstrijd in <strong>2-1</strong> eindigt krijg je <strong>10</strong> punten, want je hebt de score 100% goed voorspeld. 
+            </p>
+            <p><strong>Hoe kan ik een eigen poule aanmaken voor mijn vrienden, familie of collega's?</strong><br>
+                Als je ingelogd bent, klik bovenaan op je naam en kies voor '<a href="<%= new_poule_path %>">Eigen poule maken</a>'.
+            </p>
+            <p><strong>Hoe kan ik meedoen met een al bestaande poule?</strong><br />
+                Klik op '<a href="<%= rankings_path %>">Poules</a>' in het menu, en klik vervolgens op de poule waaraan je wilt meedoen. Nu zie je aan de rechterkant een knop 'Meedoen aan deze poule'. Nadat je hierop geklikt hebt neem je deel aan de poule.
+            </p>
+        </div>
+    </div>
+</div>
+        

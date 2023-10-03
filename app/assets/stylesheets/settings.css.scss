@@ -1,0 +1,39 @@
+@import 'variables';
+.settings {
+    .content {
+        background: #fff;
+        padding: 15px;
+        & + .content {
+            border-top: 1px solid $bordercolor;
+        }
+    }
+    .radio.avatar-option {
+        vertical-align: middle;
+        // height: 50px;
+        padding: 0;
+        margin-bottom: 4px;
+        padding: 2px;
+        input {
+            margin: 0;
+            margin-right: 4px;
+            margin-top: 20px;
+        }
+        img {
+            width: 50px;
+        }
+    }
+    .loginbox {
+        li span.glyphicon.nok {
+            visibility: hidden;
+        }
+        li span.glyphicon {
+            color: $green;
+            margin-right: 10px;
+            font-size: 26px;
+            vertical-align: middle;
+        }
+    }
+    .providers {
+        margin-top: 20px;
+    }
+}

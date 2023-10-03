@@ -1,0 +1,55 @@
+<% content_for :browsertitle do %>
+<%= @venue.name %>
+<% end %>
+<% content_for :title do %>
+    <a href="<%= venues_path %>">Stadions</a>
+    <span class="separator">&rsaquo;</span>
+    <%= @venue.name %>
+<% end %>
+<% content_for :metatags do %>
+    <meta property="og:title" content="<%= @venue.name %>" />
+    <!--<meta property="og:description" content="In <%= @venue.name %> maakt deel uit van de selectie van <%= @venue.name %> op het WK 2014 in Brazilië." />-->
+    <meta property="og:image" content="<%= request.protocol + request.host_with_port %><%= @venue.picture %>" />
+<% end %>
+<div class="detailspage venue">
+    <div class="block info">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image">
+                    <%= image_tag @venue.picture(:medium) %>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="pull-right venue-info">
+                    <table class="keyvalue">
+                        <tr>
+                            <td class="key">Capaciteit:</td>
+                            <td class="value"><%= @venue.capacity %></td>
+                        </tr>
+                    </table>
+                </div>
+                <p>
+
+                    <%=raw @venue.description %>
+                </p>    
+            </div>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-8">
+            <h2>Wedstrijden</h2>
+            <% @venue.matches.sort { |m1,m2| m1.startDate <=> m2.startDate }.each do |m| %>
+                <%= render 'shared/match', :match => m, :show_group => true, :show_stage => true %>
+            <% end %>
+        </div>
+        <div class="col-md-4">
+            <aside>
+                <h2>Het weer</h2>
+                <div class="block">
+                    
+                    <iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" src="http://forecast.io/embed/#lat=<%= @venue.latitude %>&lon=<%= @venue.longitude %>&name=<%= @venue.city %>&color=#000000&units=si"> </iframe>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>

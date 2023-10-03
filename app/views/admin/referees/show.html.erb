@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Firstname:</strong>
+  <%= @referee.firstName %>
+</p>
+
+<p>
+  <strong>Lastname:</strong>
+  <%= @referee.lastName %>
+</p>
+
+<p>
+  <strong>Dateofbirth:</strong>
+  <%= @referee.dateOfBirth %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @referee.country_id %>
+</p>
+
+<p>
+  <strong>Isactive:</strong>
+  <%= @referee.isActive %>
+</p>
+
+<%= link_to 'Edit', edit_admin_referee_path(@referee) %> |
+<%= link_to 'Back', edit_admin_referee_pathreferees_path %>

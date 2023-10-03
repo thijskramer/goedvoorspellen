@@ -1,0 +1,14 @@
+<% content_for :browsertitle do %>
+Nieuwe poule aanmaken
+<% end %>
+<% content_for :title do %>
+    <a href="<%= rankings_path %>">Poules</a>
+    <span class="separator">&rsaquo;</span>
+    Nieuwe poule
+<% end %>
+<div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <%= render 'form' %>
+    </div>
+</div>

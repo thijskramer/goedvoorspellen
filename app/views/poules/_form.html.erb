@@ -1,0 +1,66 @@
+<div class="pouleform">
+    <%= form_for(@poule, :html => {:class => 'form-horizontal'}) do |f| %>
+        <% if @poule.errors.any? %>
+            <div id="error_explanation">
+                <h2><%= pluralize(@poule.errors.count, "error") %> prohibited this poule from being saved:</h2>
+                <ul>
+                    <% @poule.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
+                    <% end %>
+                </ul>
+            </div>
+        <% end %>
+        <div class="form-group">
+              <%= f.label :name, "Naam", :class => 'col-sm-2 control-label' %>
+              <div class="col-sm-10">
+                <%= f.text_field :name, :class => 'form-control' %>
+              </div>
+        </div>
+        <div class="form-group">
+              <%= f.label :description, "Omschrijving", :class => 'col-sm-2 control-label' %>
+              <div class="col-sm-10">
+                <%= f.text_area :description, :class => 'form-control', :rows => 7 %>
+              </div>
+        </div>
+        <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <label class="checkbox-inline">
+                    <%= f.check_box :is_protected %>
+                    Scherm deze poule af met een wachtwoord
+                </label>
+              </div>
+        </div>
+        <div class="form-group">
+              <div class="col-sm-10 col-sm-offset-2">
+                <label class="checkbox-inline">
+                    <%= f.check_box :publicly_visible %>
+                    Omschrijving van deze poule is voor iedereen zichtbaar
+                </label>
+                <span class="help-block">Indien uitgevinkt kunnen alleen deelnemers van deze poule de omschrijving van deze poule bekijken.</span>
+              </div>
+        </div>
+         <div class="form-group password-field" style="<%= "display: none;" unless @poule.is_protected %>">
+              <%= f.label :password, "Wachtwoord", :class => 'col-sm-2 control-label' %>
+              <div class="col-sm-10">
+                <%= f.text_field :password, :class => 'form-control' %>
+              </div>
+        </div>
+        <div class="actions form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <%= f.submit :class => 'btn btn-primary' %>
+                <%= link_to 'Annuleren', @poule.id == nil ? rankings_path : poule_path(@poule), :class => 'btn btn-link' %>
+               
+            </div>
+        </div>
+    <% end %>
+    <script>
+        $('#poule_is_protected').on('change', function() {
+            if($(this).is(':checked')) {
+                $('.password-field').slideDown(200);
+            }
+            else {
+                $('.password-field').slideUp(200);   
+            }
+        });
+    </script>
+</div>

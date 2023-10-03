@@ -1,0 +1,37 @@
+<h1>Listing countries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Dutchname</th>
+      <th>Isoalpha2code</th>
+      <th>Isoalpha3code</th>
+      <th>Isonumericcode</th>
+      <th>Fifacode</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @countries.each do |country| %>
+      <tr>
+        <td><%= country.name %></td>
+        <td><%= country.dutchName %></td>
+        <td><%= country.isoAlpha2Code %></td>
+        <td><%= country.isoAlpha3Code %></td>
+        <td><%= country.isoNumericCode %></td>
+        <td><%= country.FIFAcode %></td>
+        <td><%= link_to 'Show', country %></td>
+        <td><%= link_to 'Edit', edit_country_path(country) %></td>
+        <td><%= link_to 'Destroy', country, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Country', new_country_path %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_id: 1
+  match_id: 1
+  minute: 1
+  plus_extra_time: 1
+  is_penalty: false
+  is_own_goal: false
+
+two:
+  player_id: 1
+  match_id: 1
+  minute: 1
+  plus_extra_time: 1
+  is_penalty: false
+  is_own_goal: false

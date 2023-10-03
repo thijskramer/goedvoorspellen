@@ -1,0 +1,176 @@
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'matchmenu' %>
+  </div>
+  <div class="col-md-9">
+    <div class="row substitutes">
+        <table class="table">
+          <thead>
+          <tr>
+            <th><%= @match.hometeam.name %></th>
+            <th><%= @match.homeScore %>-<%= @match.awayScore %></th>
+            <th><%= @match.awayteam.name %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td class="home">
+                <ul>
+                  <% @match.homelineups.each do |l| %>
+                    <li>
+                      <strong><%= l.player.number %>.</strong> <%= l.player.name %>
+                      <% sub = @match.substitutes.where(:player_out_id => l.player_id).first %>
+                      <% unless sub.nil? %>
+                          <span class="substitution out">
+                            <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                          </span>
+                      <% else %>
+                        - 
+                        <a href="<%= new_admin_substitute_path(team_id: @match.hometeam_id, player_out_id: l.player_id, match_id: @match.id) %>" class="swap">
+                          Wissel
+                        </a>
+                      <% end %>
+                    </li>
+                    <% unless sub.nil? %>
+                      <li>
+                        <strong><%= sub.player_in.number %>.</strong> <%= sub.player_in.name %>
+                        <span class="substitution in">
+                          <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                        </span>
+                        <% subsub = @match.substitutes.where(:player_out_id => sub.player_in_id).first %>
+                        <% unless subsub.nil? %>
+                            <span class="substitution out">
+                              <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                            </span>
+                        <% else %>
+                          - 
+                        <a href="<%= new_admin_substitute_path(team_id: @match.hometeam_id, player_out_id: sub.player_in_id, match_id: @match.id) %>" class="swap">
+                          Wissel
+                        </a>
+                        <% end %>
+                      </li>
+                      <% unless subsub.nil? %>
+                        <li>
+                          <strong><%= subsub.player_in.number %>.</strong> <%= subsub.player_in.name %>
+                          <span class="substitution in">
+                            <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                          </span>
+                          <% subsubsub = @match.substitutes.where(:player_out_id => subsub.player_in_id).first %>
+                          <% unless subsubsub.nil? %>
+                              <span class="substitution out">
+                                <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                              </span>
+                          <% else %>
+                            - 
+                            <a href="<%= new_admin_substitute_path(team_id: @match.hometeam_id, player_out_id: subsub.player_in_id, match_id: @match.id) %>" class="swap">
+                              Wissel
+                            </a>
+                          <% end %>
+                        </li>
+                        <% unless subsubsub.nil? %>
+                          <li>
+                            <strong><%= subsubsub.player_in.number %>.</strong> <%= subsubsub.player_in.name %>
+                            <span class="substitution in">
+                              <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                            </span>
+                          </li>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </ul>
+              </td>
+              <td class="label">
+                Wissels
+              </td>
+              <td class="away">
+                <ul>
+                  <% @match.awaylineups.each do |l| %>
+                    <li>
+                      <strong><%= l.player.number %>.</strong> <%= l.player.name %>
+                      <% sub = @match.substitutes.where(:player_out_id => l.player_id).first %>
+                      <% unless sub.nil? %>
+                          <span class="substitution out">
+                            <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                          </span>
+                      <% else %>
+                        - 
+                        <a href="<%= new_admin_substitute_path(team_id: @match.awayteam_id, player_out_id: l.player_id, match_id: @match.id) %>" class="swap">
+                          Wissel
+                        </a>
+                      <% end %>
+                    </li>
+                    <% unless sub.nil? %>
+                      <li>
+                        <strong><%= sub.player_in.number %>.</strong> <%= sub.player_in.name %>
+                        <span class="substitution in">
+                          <%= sub.minute %>'<%= '+'+sub.plus_extra_time.to_s unless sub.plus_extra_time.nil? %>
+                        </span>
+                        <% subsub = @match.substitutes.where(:player_out_id => sub.player_in_id).first %>
+                        <% unless subsub.nil? %>
+                            <span class="substitution out">
+                              <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                            </span>
+                        <% else %>
+                          - 
+                        <a href="<%= new_admin_substitute_path(team_id: @match.awayteam_id, player_out_id: sub.player_in_id, match_id: @match.id) %>" class="swap">
+                          Wissel
+                        </a>
+                        <% end %>
+                      </li>
+                      <% unless subsub.nil? %>
+                        <li>
+                          <strong><%= subsub.player_in.number %>.</strong> <%= subsub.player_in.name %>
+                          <span class="substitution in">
+                            <%= subsub.minute %>'<%= '+'+subsub.plus_extra_time.to_s unless subsub.plus_extra_time.nil? %>
+                          </span>
+                          <% subsubsub = @match.substitutes.where(:player_out_id => subsub.player_in_id).first %>
+                          <% unless subsubsub.nil? %>
+                              <span class="substitution out">
+                                <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                              </span>
+                          <% else %>
+                            - 
+                            <a href="<%= new_admin_substitute_path(team_id: @match.awayteam_id, player_out_id: subsub.player_in_id, match_id: @match.id) %>" class="swap">
+                              Wissel
+                            </a>
+                          <% end %>
+                        </li>
+                        <% unless subsubsub.nil? %>
+                          <li>
+                            <strong><%= subsubsub.player_in.number %>.</strong> <%= subsubsub.player_in.name %>
+                            <span class="substitution in">
+                              <%= subsubsub.minute %>'<%= '+'+subsubsub.plus_extra_time.to_s unless subsubsub.plus_extra_time.nil? %>
+                            </span>
+                          </li>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function() {
+    $('.swap').on('click', function(e) {
+      var self = $(this);
+      var url = $(self).attr('href');
+      $.get(url, function(response) {
+        var li = $('<li />').insertAfter(self);
+        li.html(response);
+      });
+      e.preventDefault();
+    });
+
+    $('table td').on('click', 'form a.cancel', function(e) {
+      e.preventDefault();
+      $(this).parents('.well.well-sm').parent('li').remove();
+    });
+  });
+
+</script>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  match_id: 1
+  player_id: 1
+  minute: 1
+  plus_extra_time: 1
+  is_yellow_card: false
+  is_red_card: false
+
+two:
+  match_id: 1
+  player_id: 1
+  minute: 1
+  plus_extra_time: 1
+  is_yellow_card: false
+  is_red_card: false

@@ -1,0 +1,139 @@
+@import 'variables';
+aside {
+  .block {
+    &.nextgame {
+      .countdown {
+        font-family: $headfont;
+        text-transform: uppercase;
+        background: rgba(0,0,0,0.55);
+        text-shadow: 1px 1px 0 #000;
+        color: #fff;
+        text-align: center;
+        padding-top: 8px;
+        .elem {
+          display: inline-block;
+          height: 73px;
+          .val, .lbl {
+            display: block;
+            text-align: center;
+          }
+          .lbl {
+            font-size: 12px;
+          }
+          .val {
+            font-weight: 700;
+            font-size: 50px;
+            line-height: 46px;
+          }
+          &.sep {
+            vertical-align: top;
+          }
+        }
+        @media(max-width: 1199px) {
+            .elem {
+                height: 65px;
+                .lbl {
+                    font-size: 10px;
+                }
+                .val {
+                    font-size: 43px;
+                    line-height: 40px;
+                }
+            }
+        }
+      }
+      .match-card {
+        padding: 0;
+        background: #fff;
+        .matchdatetime {
+          position: relative;
+          left: auto;
+          top: auto;
+          width: auto;
+          padding: 0;
+          font-size: 16px;
+          padding-left: 10px;
+          .matchdate {
+            display: inline-block;
+            line-height: 30px;
+          }
+          .matchtime {
+            font-size: 22px;
+            float: right;
+            padding-right: 5px;
+          }
+        }
+        .opponents {
+          padding-left: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+        .venue {
+            display: none;
+          // text-align: left;
+          // padding-top: 2px;
+          // padding-bottom: 6px;
+          // padding-left: 10px;
+          // border-top: 1px solid #e2e2e2;
+        }
+        .home, .away {
+          width: auto;
+          float: none;
+          .team {
+            text-align: left;
+            font-size: 20px;
+            @media(max-width: 767px) {
+                font-size: 16px;
+            }
+            .flag {
+              position: relative;
+              right: auto;
+              top: auto;
+              left: auto;
+              @media(max-width: 767px) {
+                top: -2px;
+                }
+            }
+            .wns {
+                position: relative;
+                left: auto;
+                right: auto;
+                top: auto;
+                font-size: 13px;
+                vertical-align: middle;
+                line-height: 12px;
+            }
+          }
+          .score {
+            right: 6px;
+            left: auto;
+            top: 5px;
+            font-size: 20px;
+            width: 22px;
+            line-height: 28px;
+            @media(max-width: 767px) {
+                top: 1px;
+                line-height: 24px;
+                }
+          }
+        }
+        .home {
+          .flag {
+            float: left;
+            margin-top: 3px;
+            margin-right: 4px;
+          }
+        }
+        .away {
+          margin-top: 4px;
+          .team {
+            padding: 0;
+          }
+        }
+        .venue {
+          text-align: left;
+        }
+      }
+    }
+  }
+}

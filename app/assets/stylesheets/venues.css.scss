@@ -1,0 +1,75 @@
+@import 'variables';
+.venuelist {
+    .venue {
+        .logo {
+            height: 223px;
+            margin-top: -2px;
+        }
+        .subtitle {
+            position: absolute; 
+            display: block;
+            text-align: center;
+            bottom: 3px;
+            width: 100%;
+        }
+        h2 {
+            bottom: 13px;
+        }
+    }
+    @media(max-width: 767px) {
+        .venue {
+            .logo {
+                height: auto;
+                margin-top: -2px;
+                width: 60px;
+                margin-left: 1px;
+                margin-right: 5px;
+            }
+            h2 {
+                bottom: auto;
+                margin: 0;
+                padding-top: 4px;
+            }
+            .subtitle {
+                text-align: left;
+                bottom: auto;
+                position: relative;
+            }
+        }
+    }
+}
+
+.detailspage.venue {
+    // padding: 15px;
+    p {
+        font-size: 16px;
+    }
+    .image {
+        // margin-left: -15px;
+        // margin-bottom: -15px;
+        // margin-right: -15px;
+        img {
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+    .block {
+        background: #fff;
+    }
+    .block.info {
+        background: #fff;
+        padding: 15px;
+    }
+    .venue-info {
+        border: 1px solid $bordercolor;
+        border-bottom: 0;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        table td.key {
+            padding-left: 10px;
+        }
+        table td.value {
+            padding-right: 10px;
+        }
+    }
+}

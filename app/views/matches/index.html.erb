@@ -1,0 +1,73 @@
+<% content_for :browsertitle do %>
+Wedstrijden
+<% end %>
+<% content_for :title do %>
+  Wedstrijden
+<% end %>
+<% content_for :metatags do %>
+    <meta property="og:title" content="Alle wedstrijden op het WK 2014" />
+    <meta property="og:description" content="Bekijk hier alle wedstrijden op het WK 2014 in Brazilië in een gemakkelijk overzicht." />
+    <!--<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />-->
+<% end %>
+<!-- <div class="row">
+<div class="col-md-10 col-md-offset-1">
+    <a href="#" data-toggle="modal" class="btn btn-default pull-right" data-target="#calendar"><span class="glyphicon glyphicon-calendar"></span> Voeg wedstrijdschema toe aan mijn agenda</a>
+</div>
+</div> -->
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+    <div class="match-cards">
+        <% lasttype = 0
+        @matches.each_with_index do |match, index| %>
+            <% if lasttype != match.matchtype_id %>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="matchtype" id="<%= match.type.to_s.downcase.sub('8e', 'achtste').sub(' ', '') %>"><%= match.type %></div>
+                    </div>
+                </div>
+            <%
+            end
+            lasttype = match.matchtype_id
+            %>
+            <%= render 'shared/match', :match => match, :show_group => true %>
+            
+          <% end %>
+        </div>
+    </div>
+</div>
+<% if false %>
+<div class="modal fade wedstrijden" id="calendar" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Wedstrijdschema toevoegen aan agenda</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#googlecalendar" data-toggle="tab">Google Calendar</a></li>
+                  <li><a href="#outlook" data-toggle="tab">Outlook</a></li>
+                  <li><a href="#ics" data-toggle="tab">.ics</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="googlecalendar">
+                    <p><a href="http://www.google.com/calendar/render?cid=http://www.goedvoorspellen.nl/wedstrijden/calendar.ics" target="_blank" class="btn btn-success">Voeg wedstrijdschema toe aan Google Calendar <span class="glyphicon glyphicon-new-window"></span></a></p>
+                  </div>
+                  <div class="tab-pane" id="outlook">
+                    <p><a href="webcal://www.goedvoorspellen.nl/wedstrijden/calendar.ics" class="btn btn-success">Voeg wedstrijdschema toe aan Outlook</a></p>
+                  </div>
+                  <div class="tab-pane" id="ics">
+                    <p>Kopieer onderstaande URL om deze in een agenda-applicatie te kunnen openen: <br /><input type="text" class="form-control" value="http://www.goedvoorspellen.nl/wedstrijden/calendar.ics" onfocus="this.select();" onmouseup="return false;"></p>
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
+    </div>
+</div>
+<% end %>

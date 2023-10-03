@@ -1,0 +1,20 @@
+<% content_for :browsertitle do %>
+Instellingen van <%= @poule.name %>
+<% end %>
+<% content_for :title do %>
+    <a href="<%= rankings_path %>">Poules</a>
+    <span class="separator">&rsaquo;</span>
+    <a href="<%= poule_path(@poule) %>"><%= @poule.name %></a>
+    <span class="separator">&rsaquo;</span>
+    Instellingen
+<% end %>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <%= render 'form' %>
+        <div class="pouleform">
+            <%= link_to 'Poule verwijderen', @poule, method: :delete, data: { confirm: 'Weet je zeker dat je deze poule wilt verwijderen? ' + ('Alle andere gebruikers zullen ook uit deze poule worden verwijderd.' if @poule.users.count > 1).to_s }, :class => 'btn btn-danger' %>
+        </div>
+    </div>
+</div>
+
+

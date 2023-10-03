@@ -1,0 +1,40 @@
+<h1>Listing referees</h1>
+<%= link_to 'New Referee', new_admin_referee_path, :class => 'btn btn-success' %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Dateofbirth</th>
+      <th>Country</th>
+      <th>Isactive</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @referees.each do |referee| %>
+      <tr>
+        <td><%= referee.firstName %></td>
+        <td><%= referee.lastName %></td>
+        <td><%= referee.dateOfBirth.strftime('%d-%m-%Y') %></td>
+        <td>
+          <% if referee.country_id != nil %>
+            <%= flag(referee.country.isoAlpha2Code) %><%= referee.country.dutchName %></td>
+
+          <% end %>
+        </td>
+        <td><%= bool_icon(referee.isActive) %></td>
+        <td><%= link_to 'Show', admin_referee_path(referee), :class => 'btn btn-default btn-sm' %></td>
+        <td><%= link_to 'Edit', edit_admin_referee_path(referee), :class=> 'btn btn-primary btn-sm' %></td>
+        <td><%= link_to 'Destroy', admin_referee_path(referee), method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger btn-sm' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
